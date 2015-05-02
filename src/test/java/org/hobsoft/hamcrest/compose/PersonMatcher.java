@@ -13,10 +13,10 @@
  */
 package org.hobsoft.hamcrest.compose;
 
-import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
 import static org.hamcrest.Matchers.is;
+import static org.hobsoft.hamcrest.compose.HasFeatureMatcher.hasFeature;
 
 /**
  * 
@@ -25,30 +25,9 @@ public class PersonMatcher extends ConjunctionMatcher<Person>
 {
 	public PersonMatcher(Person expected)
 	{
-		and(new FeatureMatcher<Person, String>(is(expected.getTitle()), "title", "title")
-		{
-			@Override
-			protected String featureValueOf(Person actual)
-			{
-				return actual.getTitle();
-			}
-		})
-		.and(new FeatureMatcher<Person, String>(is(expected.getFirstName()), "firstName", "firstName")
-		{
-			@Override
-			protected String featureValueOf(Person actual)
-			{
-				return actual.getFirstName();
-			}
-		})
-		.and(new FeatureMatcher<Person, String>(is(expected.getLastName()), "lastName", "lastName")
-		{
-			@Override
-			protected String featureValueOf(Person actual)
-			{
-				return actual.getLastName();
-			}
-		});
+		and(hasFeature(is(expected.getTitle()), "title", "title", Person::getTitle))
+		.and(hasFeature(is(expected.getFirstName()), "firstName", "firstName", Person::getFirstName))
+		.and(hasFeature(is(expected.getLastName()), "lastName", "lastName", Person::getLastName));
 	}
 
 	public static Matcher<Person> personEqualTo(Person expected)
