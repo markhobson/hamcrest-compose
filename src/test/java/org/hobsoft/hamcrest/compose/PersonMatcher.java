@@ -13,8 +13,12 @@
  */
 package org.hobsoft.hamcrest.compose;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.SelfDescribing;
 import org.hamcrest.TypeSafeMatcher;
 
 /**
@@ -45,5 +49,46 @@ public class PersonMatcher extends TypeSafeMatcher<Person>
 		return expected.getTitle().equals(actual.getTitle())
 			&& expected.getFirstName().equals(actual.getFirstName())
 			&& expected.getLastName().equals(actual.getLastName());
+	}
+	
+	@Override
+	protected void describeMismatchSafely(final Person actual, Description mismatch)
+	{
+		List<SelfDescribing> mismatches = new ArrayList<SelfDescribing>();
+		
+		if (!expected.getTitle().equals(actual.getTitle()))
+		{
+			mismatches.add(new SelfDescribing()
+			{
+				public void describeTo(Description mismatch)
+				{
+					mismatch.appendText("title was ").appendValue(actual.getTitle());
+				}
+			});
+		}
+		
+		if (!expected.getFirstName().equals(actual.getFirstName()))
+		{
+			mismatches.add(new SelfDescribing()
+			{
+				public void describeTo(Description mismatch)
+				{
+					mismatch.appendText("firstName was ").appendValue(actual.getFirstName());
+				}
+			});
+		}
+		
+		if (!expected.getLastName().equals(actual.getLastName()))
+		{
+			mismatches.add(new SelfDescribing()
+			{
+				public void describeTo(Description mismatch)
+				{
+					mismatch.appendText("lastName was ").appendValue(actual.getLastName());
+				}
+			});
+		}
+		
+		mismatch.appendList("", " and ", "", mismatches);
 	}
 }
