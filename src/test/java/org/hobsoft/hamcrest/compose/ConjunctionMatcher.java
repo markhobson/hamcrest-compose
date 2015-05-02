@@ -21,6 +21,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import static java.util.Collections.singletonList;
+import static java.util.Collections.unmodifiableList;
 
 /**
  * 
@@ -36,7 +37,7 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	
 	public ConjunctionMatcher(List<Matcher<T>> matchers)
 	{
-		this.matchers = new ArrayList<>(matchers);
+		this.matchers = unmodifiableList(new ArrayList<>(matchers));
 	}
 	
 	public static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
