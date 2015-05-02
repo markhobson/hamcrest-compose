@@ -28,6 +28,8 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
  */
 public abstract class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 {
+	private static final String SEPARATOR = " and ";
+	
 	private final List<Matcher<T>> matchers;
 	
 	public ConjunctionMatcher()
@@ -44,7 +46,7 @@ public abstract class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	
 	public void describeTo(Description description)
 	{
-		description.appendList("", " and ", "", matchers);
+		description.appendList("", SEPARATOR, "", matchers);
 	}
 	
 	@Override
@@ -58,7 +60,7 @@ public abstract class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 			{
 				if (!matches)
 				{
-					mismatch.appendText(" and ");
+					mismatch.appendText(SEPARATOR);
 				}
 				
 				matches = false;
