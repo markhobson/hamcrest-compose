@@ -40,7 +40,9 @@ public class PersonMatcher extends TypeSafeMatcher<Person>
 
 	public void describeTo(Description description)
 	{
-		// TODO: implement
+		description.appendText("title is ").appendValue(expected.getTitle()).appendText(" and ");
+		description.appendText("firstName is ").appendValue(expected.getFirstName()).appendText(" and ");
+		description.appendText("lastName is ").appendValue(expected.getLastName());
 	}
 
 	@Override

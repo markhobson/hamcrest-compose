@@ -26,6 +26,17 @@ import static org.junit.Assert.assertThat;
 public class PersonMatcherTest
 {
 	@Test
+	public void describeDescribesExpected()
+	{
+		Person person = new Person("x", "y", "z");
+		StringDescription description = new StringDescription();
+		
+		personEqualTo(person).describeTo(description);
+		
+		assertThat(description.toString(), is("title is \"x\" and firstName is \"y\" and lastName is \"z\""));
+	}
+	
+	@Test
 	public void matchesWhenEqualReturnsTrue()
 	{
 		Person person1 = new Person("x", "y", "z");
