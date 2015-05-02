@@ -21,16 +21,24 @@ import org.hamcrest.Matcher;
 import org.hamcrest.SelfDescribing;
 import org.hamcrest.TypeSafeMatcher;
 
+import static org.hamcrest.Matchers.is;
+
 /**
  * 
  */
 public class PersonMatcher extends TypeSafeMatcher<Person>
 {
-	private final Person expected;
+	private final Matcher<String> titleMatcher;
+	
+	private final Matcher<String> firstNameMatcher;
+	
+	private final Matcher<String> lastNameMatcher;
 
 	public PersonMatcher(Person expected)
 	{
-		this.expected = expected;
+		titleMatcher = is(expected.getTitle());
+		firstNameMatcher = is(expected.getFirstName());
+		lastNameMatcher = is(expected.getLastName());
 	}
 
 	public static Matcher<Person> personEqualTo(Person expected)
@@ -40,17 +48,17 @@ public class PersonMatcher extends TypeSafeMatcher<Person>
 
 	public void describeTo(Description description)
 	{
-		description.appendText("title is ").appendValue(expected.getTitle()).appendText(" and ");
-		description.appendText("firstName is ").appendValue(expected.getFirstName()).appendText(" and ");
-		description.appendText("lastName is ").appendValue(expected.getLastName());
+		description.appendText("title ").appendDescriptionOf(titleMatcher).appendText(" and ");
+		description.appendText("firstName ").appendDescriptionOf(firstNameMatcher).appendText(" and ");
+		description.appendText("lastName ").appendDescriptionOf(lastNameMatcher);
 	}
 
 	@Override
 	protected boolean matchesSafely(Person actual)
 	{
-		return expected.getTitle().equals(actual.getTitle())
-			&& expected.getFirstName().equals(actual.getFirstName())
-			&& expected.getLastName().equals(actual.getLastName());
+		return titleMatcher.matches(actual.getTitle())
+			&& firstNameMatcher.matches(actual.getFirstName())
+			&& lastNameMatcher.matches(actual.getLastName());
 	}
 	
 	@Override
@@ -58,35 +66,38 @@ public class PersonMatcher extends TypeSafeMatcher<Person>
 	{
 		List<SelfDescribing> mismatches = new ArrayList<SelfDescribing>();
 		
-		if (!expected.getTitle().equals(actual.getTitle()))
+		if (!titleMatcher.matches(actual.getTitle()))
 		{
 			mismatches.add(new SelfDescribing()
 			{
 				public void describeTo(Description mismatch)
 				{
-					mismatch.appendText("title was ").appendValue(actual.getTitle());
+					mismatch.appendText("title ");
+					titleMatcher.describeMismatch(actual.getTitle(), mismatch);
 				}
 			});
 		}
 		
-		if (!expected.getFirstName().equals(actual.getFirstName()))
+		if (!firstNameMatcher.matches(actual.getFirstName()))
 		{
 			mismatches.add(new SelfDescribing()
 			{
 				public void describeTo(Description mismatch)
 				{
-					mismatch.appendText("firstName was ").appendValue(actual.getFirstName());
+					mismatch.appendText("firstName ");
+					firstNameMatcher.describeMismatch(actual.getFirstName(), mismatch);
 				}
 			});
 		}
 		
-		if (!expected.getLastName().equals(actual.getLastName()))
+		if (!lastNameMatcher.matches(actual.getLastName()))
 		{
 			mismatches.add(new SelfDescribing()
 			{
 				public void describeTo(Description mismatch)
 				{
-					mismatch.appendText("lastName was ").appendValue(actual.getLastName());
+					mismatch.appendText("lastName ");
+					lastNameMatcher.describeMismatch(actual.getLastName(), mismatch);
 				}
 			});
 		}
