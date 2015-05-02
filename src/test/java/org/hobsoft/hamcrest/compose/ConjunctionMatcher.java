@@ -34,7 +34,7 @@ public abstract class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	
 	public ConjunctionMatcher()
 	{
-		matchers = new ArrayList<Matcher<T>>();
+		matchers = new ArrayList<>();
 	}
 	
 	public ConjunctionMatcher<T> and(Matcher<T> matcher)
@@ -44,6 +44,7 @@ public abstract class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 		return this;
 	}
 	
+	@Override
 	public void describeTo(Description description)
 	{
 		description.appendList("", SEPARATOR, "", matchers);
