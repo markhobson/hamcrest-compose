@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Description;
+import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.hamcrest.SelfDescribing;
 import org.hamcrest.TypeSafeMatcher;
@@ -28,17 +29,40 @@ import static org.hamcrest.Matchers.is;
  */
 public class PersonMatcher extends TypeSafeMatcher<Person>
 {
-	private final Matcher<String> titleMatcher;
+	private final Matcher<Person> titleMatcher;
 	
-	private final Matcher<String> firstNameMatcher;
+	private final Matcher<Person> firstNameMatcher;
 	
-	private final Matcher<String> lastNameMatcher;
+	private final Matcher<Person> lastNameMatcher;
 
 	public PersonMatcher(Person expected)
 	{
-		titleMatcher = is(expected.getTitle());
-		firstNameMatcher = is(expected.getFirstName());
-		lastNameMatcher = is(expected.getLastName());
+		titleMatcher = new FeatureMatcher<Person, String>(is(expected.getTitle()), "title", "title")
+		{
+			@Override
+			protected String featureValueOf(Person actual)
+			{
+				return actual.getTitle();
+			}
+		};
+		
+		firstNameMatcher = new FeatureMatcher<Person, String>(is(expected.getFirstName()), "firstName", "firstName")
+		{
+			@Override
+			protected String featureValueOf(Person actual)
+			{
+				return actual.getFirstName();
+			}
+		};
+		
+		lastNameMatcher = new FeatureMatcher<Person, String>(is(expected.getLastName()), "lastName", "lastName")
+		{
+			@Override
+			protected String featureValueOf(Person actual)
+			{
+				return actual.getLastName();
+			}
+		};
 	}
 
 	public static Matcher<Person> personEqualTo(Person expected)
@@ -48,17 +72,17 @@ public class PersonMatcher extends TypeSafeMatcher<Person>
 
 	public void describeTo(Description description)
 	{
-		description.appendText("title ").appendDescriptionOf(titleMatcher).appendText(" and ");
-		description.appendText("firstName ").appendDescriptionOf(firstNameMatcher).appendText(" and ");
-		description.appendText("lastName ").appendDescriptionOf(lastNameMatcher);
+		description.appendDescriptionOf(titleMatcher).appendText(" and ");
+		description.appendDescriptionOf(firstNameMatcher).appendText(" and ");
+		description.appendDescriptionOf(lastNameMatcher);
 	}
 
 	@Override
 	protected boolean matchesSafely(Person actual)
 	{
-		return titleMatcher.matches(actual.getTitle())
-			&& firstNameMatcher.matches(actual.getFirstName())
-			&& lastNameMatcher.matches(actual.getLastName());
+		return titleMatcher.matches(actual)
+			&& firstNameMatcher.matches(actual)
+			&& lastNameMatcher.matches(actual);
 	}
 	
 	@Override
@@ -66,38 +90,35 @@ public class PersonMatcher extends TypeSafeMatcher<Person>
 	{
 		List<SelfDescribing> mismatches = new ArrayList<SelfDescribing>();
 		
-		if (!titleMatcher.matches(actual.getTitle()))
+		if (!titleMatcher.matches(actual))
 		{
 			mismatches.add(new SelfDescribing()
 			{
 				public void describeTo(Description mismatch)
 				{
-					mismatch.appendText("title ");
-					titleMatcher.describeMismatch(actual.getTitle(), mismatch);
+					titleMatcher.describeMismatch(actual, mismatch);
 				}
 			});
 		}
 		
-		if (!firstNameMatcher.matches(actual.getFirstName()))
+		if (!firstNameMatcher.matches(actual))
 		{
 			mismatches.add(new SelfDescribing()
 			{
 				public void describeTo(Description mismatch)
 				{
-					mismatch.appendText("firstName ");
-					firstNameMatcher.describeMismatch(actual.getFirstName(), mismatch);
+					firstNameMatcher.describeMismatch(actual, mismatch);
 				}
 			});
 		}
 		
-		if (!lastNameMatcher.matches(actual.getLastName()))
+		if (!lastNameMatcher.matches(actual))
 		{
 			mismatches.add(new SelfDescribing()
 			{
 				public void describeTo(Description mismatch)
 				{
-					mismatch.appendText("lastName ");
-					lastNameMatcher.describeMismatch(actual.getLastName(), mismatch);
+					lastNameMatcher.describeMismatch(actual, mismatch);
 				}
 			});
 		}
