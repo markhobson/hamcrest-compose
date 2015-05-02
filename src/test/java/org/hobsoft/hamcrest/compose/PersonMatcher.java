@@ -13,46 +13,35 @@
  */
 package org.hobsoft.hamcrest.compose;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hamcrest.Description;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import static org.hamcrest.Matchers.is;
 
 /**
  * 
  */
-public class PersonMatcher extends TypeSafeDiagnosingMatcher<Person>
+public class PersonMatcher extends ConjunctionMatcher<Person>
 {
-	private final List<Matcher<Person>> matchers;
-	
 	public PersonMatcher(Person expected)
 	{
-		matchers = new ArrayList<Matcher<Person>>();
-		
-		matchers.add(new FeatureMatcher<Person, String>(is(expected.getTitle()), "title", "title")
+		and(new FeatureMatcher<Person, String>(is(expected.getTitle()), "title", "title")
 		{
 			@Override
 			protected String featureValueOf(Person actual)
 			{
 				return actual.getTitle();
 			}
-		});
-		
-		matchers.add(new FeatureMatcher<Person, String>(is(expected.getFirstName()), "firstName", "firstName")
+		})
+		.and(new FeatureMatcher<Person, String>(is(expected.getFirstName()), "firstName", "firstName")
 		{
 			@Override
 			protected String featureValueOf(Person actual)
 			{
 				return actual.getFirstName();
 			}
-		});
-		
-		matchers.add(new FeatureMatcher<Person, String>(is(expected.getLastName()), "lastName", "lastName")
+		})
+		.and(new FeatureMatcher<Person, String>(is(expected.getLastName()), "lastName", "lastName")
 		{
 			@Override
 			protected String featureValueOf(Person actual)
@@ -65,33 +54,5 @@ public class PersonMatcher extends TypeSafeDiagnosingMatcher<Person>
 	public static Matcher<Person> personEqualTo(Person expected)
 	{
 		return new PersonMatcher(expected);
-	}
-
-	public void describeTo(Description description)
-	{
-		description.appendList("", " and ", "", matchers);
-	}
-	
-	@Override
-	protected boolean matchesSafely(Person actual, Description mismatch)
-	{
-		boolean matches = true;
-		
-		for (Matcher<Person> matcher : matchers)
-		{
-			if (!matcher.matches(actual))
-			{
-				if (!matches)
-				{
-					mismatch.appendText(" and ");
-				}
-				
-				matches = false;
-				
-				matcher.describeMismatch(actual, mismatch);
-			}
-		}
-		
-		return matches;
 	}
 }
