@@ -16,22 +16,23 @@ package org.hobsoft.hamcrest.compose;
 import org.hamcrest.Matcher;
 
 import static org.hamcrest.Matchers.is;
+import static org.hobsoft.hamcrest.compose.ConjunctionMatcher.compose;
 import static org.hobsoft.hamcrest.compose.HasFeatureMatcher.hasFeature;
 
 /**
  * 
  */
-public class PersonMatcher extends ConjunctionMatcher<Person>
+public final class PersonMatcher
 {
-	public PersonMatcher(Person expected)
+	private PersonMatcher()
 	{
-		and(hasFeature("title", Person::getTitle, is(expected.getTitle())));
-		and(hasFeature("firstName", Person::getFirstName, is(expected.getFirstName())));
-		and(hasFeature("lastName", Person::getLastName, is(expected.getLastName())));
+		throw new AssertionError();
 	}
-
+	
 	public static Matcher<Person> personEqualTo(Person expected)
 	{
-		return new PersonMatcher(expected);
+		return compose(hasFeature("title", Person::getTitle, is(expected.getTitle())))
+			.and(hasFeature("firstName", Person::getFirstName, is(expected.getFirstName())))
+			.and(hasFeature("lastName", Person::getLastName, is(expected.getLastName())));
 	}
 }

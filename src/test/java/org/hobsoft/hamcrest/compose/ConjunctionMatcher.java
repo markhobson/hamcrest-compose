@@ -20,28 +20,36 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import static java.util.Collections.singletonList;
+
 /**
  * 
  * 
  * @param <T>
  *            the type of this matcher
  */
-public abstract class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
+public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 {
 	private static final String SEPARATOR = " and ";
 	
 	private final List<Matcher<T>> matchers;
 	
-	public ConjunctionMatcher()
+	public ConjunctionMatcher(List<Matcher<T>> matchers)
 	{
-		matchers = new ArrayList<>();
+		this.matchers = new ArrayList<>(matchers);
+	}
+	
+	public static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
+	{
+		return new ConjunctionMatcher<>(singletonList(matcher));
 	}
 	
 	public ConjunctionMatcher<T> and(Matcher<T> matcher)
 	{
-		matchers.add(matcher);
+		List<Matcher<T>> newMatchers = new ArrayList<>(matchers);
+		newMatchers.add(matcher);
 		
-		return this;
+		return new ConjunctionMatcher<>(newMatchers);
 	}
 	
 	@Override
