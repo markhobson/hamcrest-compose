@@ -25,9 +25,9 @@ public class PersonMatcher extends ConjunctionMatcher<Person>
 {
 	public PersonMatcher(Person expected)
 	{
-		and(hasFeature("title", Person::getTitle, is(expected.getTitle())))
-		.and(hasFeature("firstName", Person::getFirstName, is(expected.getFirstName())))
-		.and(hasFeature("lastName", Person::getLastName, is(expected.getLastName())));
+		and(hasFeature("title", Person::getTitle, is(expected.getTitle())));
+		and(hasFeature("firstName", Person::getFirstName, is(expected.getFirstName())));
+		and(hasFeature("lastName", Person::getLastName, is(expected.getLastName())));
 	}
 
 	public static Matcher<Person> personEqualTo(Person expected)
