@@ -22,9 +22,9 @@ import static org.hobsoft.hamcrest.compose.HasFeatureMatcher.hasFeature;
 /**
  * 
  */
-public final class PersonMatcher
+public final class PersonMatchers
 {
-	private PersonMatcher()
+	private PersonMatchers()
 	{
 		throw new AssertionError();
 	}

@@ -17,13 +17,13 @@ import org.hamcrest.StringDescription;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hobsoft.hamcrest.compose.PersonMatcher.personEqualTo;
+import static org.hobsoft.hamcrest.compose.PersonMatchers.personEqualTo;
 import static org.junit.Assert.assertThat;
 
 /**
  * 
  */
-public class PersonMatcherTest
+public class PersonMatchersTest
 {
 	@Test
 	public void describeDescribesExpected()
