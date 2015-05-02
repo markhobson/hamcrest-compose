@@ -20,14 +20,14 @@ import org.hamcrest.Description;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.hamcrest.SelfDescribing;
-import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import static org.hamcrest.Matchers.is;
 
 /**
  * 
  */
-public class PersonMatcher extends TypeSafeMatcher<Person>
+public class PersonMatcher extends TypeSafeDiagnosingMatcher<Person>
 {
 	private final List<Matcher<Person>> matchers;
 	
@@ -72,30 +72,19 @@ public class PersonMatcher extends TypeSafeMatcher<Person>
 	{
 		description.appendList("", " and ", "", matchers);
 	}
-
-	@Override
-	protected boolean matchesSafely(Person actual)
-	{
-		for (Matcher<Person> matcher : matchers)
-		{
-			if (!matcher.matches(actual))
-			{
-				return false;
-			}
-		}
-		
-		return true;
-	}
 	
 	@Override
-	protected void describeMismatchSafely(final Person actual, Description mismatch)
+	protected boolean matchesSafely(final Person actual, Description mismatch)
 	{
+		boolean matches = true;
 		List<SelfDescribing> mismatches = new ArrayList<SelfDescribing>();
 		
 		for (final Matcher<Person> matcher : matchers)
 		{
 			if (!matcher.matches(actual))
 			{
+				matches = false;
+				
 				mismatches.add(new SelfDescribing()
 				{
 					public void describeTo(Description mismatch)
@@ -106,6 +95,11 @@ public class PersonMatcher extends TypeSafeMatcher<Person>
 			}
 		}
 		
-		mismatch.appendList("", " and ", "", mismatches);
+		if (!matches)
+		{
+			mismatch.appendList("", " and ", "", mismatches);
+		}
+		
+		return matches;
 	}
 }
