@@ -19,7 +19,6 @@ import java.util.List;
 import org.hamcrest.Description;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
-import org.hamcrest.SelfDescribing;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import static org.hamcrest.Matchers.is;
@@ -74,30 +73,23 @@ public class PersonMatcher extends TypeSafeDiagnosingMatcher<Person>
 	}
 	
 	@Override
-	protected boolean matchesSafely(final Person actual, Description mismatch)
+	protected boolean matchesSafely(Person actual, Description mismatch)
 	{
 		boolean matches = true;
-		List<SelfDescribing> mismatches = new ArrayList<SelfDescribing>();
 		
-		for (final Matcher<Person> matcher : matchers)
+		for (Matcher<Person> matcher : matchers)
 		{
 			if (!matcher.matches(actual))
 			{
+				if (!matches)
+				{
+					mismatch.appendText(" and ");
+				}
+				
 				matches = false;
 				
-				mismatches.add(new SelfDescribing()
-				{
-					public void describeTo(Description mismatch)
-					{
-						matcher.describeMismatch(actual, mismatch);
-					}
-				});
+				matcher.describeMismatch(actual, mismatch);
 			}
-		}
-		
-		if (!matches)
-		{
-			mismatch.appendList("", " and ", "", mismatches);
 		}
 		
 		return matches;
