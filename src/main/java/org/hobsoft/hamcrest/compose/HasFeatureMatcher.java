@@ -21,12 +21,15 @@ import org.hamcrest.Matcher;
 import static java.util.Objects.requireNonNull;
 
 /**
- * 
+ * Matcher that matches a feature of an object that is extracted by a function.
+ * <p>
+ * Use {@code ComposeMatchers.hasFeature} to obtain instances of this class. 
  * 
  * @param <T>
  *            the type of the object to be matched
  * @param <U>
  *            the type of the feature to be matched
+ * @see ComposeMatchers#hasFeature(String, Function, Matcher)
  */
 class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 {
