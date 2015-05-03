@@ -19,6 +19,7 @@ import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
+import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -34,5 +35,11 @@ public class ComposeMatchersTest
 	public void composeReturnsConjunctionMatcher()
 	{
 		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("xy"), is(true));
+	}
+	
+	@Test
+	public void hasFeatureReturnsHasFeatureMatcher()
+	{
+		assertThat(hasFeature("x", String::length, is(1)).matches("y"), is(true));
 	}
 }

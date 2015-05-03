@@ -13,6 +13,8 @@
  */
 package org.hobsoft.hamcrest.compose;
 
+import java.util.function.Function;
+
 import org.hamcrest.Matcher;
 
 import static java.util.Collections.singletonList;
@@ -38,5 +40,11 @@ public final class ComposeMatchers
 	public static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
 	{
 		return new ConjunctionMatcher<>(singletonList(matcher));
+	}
+	
+	public static <T, U> Matcher<T> hasFeature(String featureName, Function<T, U> featureFunction,
+		Matcher<? super U> featureMatcher)
+	{
+		return new HasFeatureMatcher<>(featureName, featureFunction, featureMatcher);
 	}
 }

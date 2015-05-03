@@ -37,12 +37,6 @@ public class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 		this.featureFunction = featureFunction;
 	}
 	
-	public static <T, U> Matcher<T> hasFeature(String featureName, Function<T, U> featureFunction,
-		Matcher<? super U> featureMatcher)
-	{
-		return new HasFeatureMatcher<>(featureName, featureFunction, featureMatcher);
-	}
-
 	@Override
 	protected final U featureValueOf(T actual)
 	{
