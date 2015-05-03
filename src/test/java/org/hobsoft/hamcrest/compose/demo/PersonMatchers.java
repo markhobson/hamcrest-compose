@@ -24,11 +24,19 @@ import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
  */
 public final class PersonMatchers
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// constructors
+	// ----------------------------------------------------------------------------------------------------------------
+
 	private PersonMatchers()
 	{
 		throw new AssertionError();
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// public methods
+	// ----------------------------------------------------------------------------------------------------------------
+
 	public static Matcher<Person> personEqualTo(Person expected)
 	{
 		return compose(hasFeature("title", Person::getTitle, is(expected.getTitle())))
