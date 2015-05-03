@@ -20,6 +20,7 @@ import org.hamcrest.StringDescription;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -41,6 +42,12 @@ public class ConjunctionMatcherTest
 	public void constructorWithNullMatchersThrowsException()
 	{
 		new ConjunctionMatcher<>(null);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void constructorWithEmptyMatchersThrowsException()
+	{
+		new ConjunctionMatcher<>(emptyList());
 	}
 	
 	@Test

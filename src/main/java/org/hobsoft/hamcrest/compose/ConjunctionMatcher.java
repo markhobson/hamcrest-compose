@@ -58,6 +58,11 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	{
 		requireNonNull(matchers, "matchers");
 		
+		if (matchers.isEmpty())
+		{
+			throw new IllegalArgumentException("matchers cannot be empty");
+		}
+		
 		this.matchers = unmodifiableList(new ArrayList<>(matchers));
 	}
 	
