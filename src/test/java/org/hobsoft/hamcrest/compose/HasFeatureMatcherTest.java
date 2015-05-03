@@ -13,9 +13,15 @@
  */
 package org.hobsoft.hamcrest.compose;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.StringDescription;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Tests {@code HasFeatureMatcher}.
@@ -30,5 +36,71 @@ public class HasFeatureMatcherTest
 	public void constructorWithNullFunctionThrowsException()
 	{
 		new HasFeatureMatcher<>("x", "y", null, anything());
+	}
+	
+	@Test
+	public void describeToDescribesMatcher()
+	{
+		StringDescription description = new StringDescription();
+		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", Integer::parseInt, anything("z"));
+		
+		matcher.describeTo(description);
+		
+		assertThat(description.toString(), is("x z"));
+	}
+	
+	@Test
+	public void matchesWhenFeatureMatcherMatchesReturnsTrue()
+	{
+		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", Integer::parseInt, is(1));
+		
+		assertThat(matcher.matches("1"), is(true));
+	}
+	
+	@Test
+	public void matchesWhenFeatureMatcherDoesNotMatchReturnsFalse()
+	{
+		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", Integer::parseInt, is(2));
+		
+		assertThat(matcher.matches("1"), is(false));
+	}
+	
+	@Test
+	public void describeMismatchDescribesMismatch()
+	{
+		StringDescription description = new StringDescription();
+		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", Integer::parseInt, nothing("z"));
+		
+		matcher.describeMismatch("1", description);
+		
+		assertThat(description.toString(), is("y z was <1>"));
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static <T> Matcher<T> nothing(String mismatch)
+	{
+		return new BaseMatcher<T>()
+		{
+			@Override
+			public void describeTo(Description description)
+			{
+				description.appendText("nothing");
+			}
+			
+			@Override
+			public boolean matches(Object actual)
+			{
+				return false;
+			}
+			
+			@Override
+			public void describeMismatch(Object actual, Description description)
+			{
+				description.appendText(mismatch).appendText(" was ").appendValue(actual);
+			}
+		};
 	}
 }
