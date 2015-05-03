@@ -53,7 +53,7 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public ConjunctionMatcher(List<Matcher<T>> matchers)
+	ConjunctionMatcher(List<Matcher<T>> matchers)
 	{
 		this.matchers = unmodifiableList(new ArrayList<>(matchers));
 	}
