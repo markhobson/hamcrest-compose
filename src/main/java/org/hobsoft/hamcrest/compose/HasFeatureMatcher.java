@@ -28,7 +28,15 @@ import org.hamcrest.Matcher;
  */
 class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// fields
+	// ----------------------------------------------------------------------------------------------------------------
+
 	private final Function<T, U> featureFunction;
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// constructors
+	// ----------------------------------------------------------------------------------------------------------------
 
 	public HasFeatureMatcher(String featureDescription, String featureName, Function<T, U> featureFunction,
 		Matcher<? super U> featureMatcher)
@@ -43,6 +51,10 @@ class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 		this.featureFunction = featureFunction;
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// FeatureMatcher methods
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Override
 	protected final U featureValueOf(T actual)
 	{

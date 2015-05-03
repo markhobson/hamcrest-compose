@@ -30,26 +30,50 @@ import static java.util.Collections.unmodifiableList;
  */
 public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 {
+	// ----------------------------------------------------------------------------------------------------------------
+	// constants
+	// ----------------------------------------------------------------------------------------------------------------
+
 	private static final String SEPARATOR = " and ";
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// fields
+	// ----------------------------------------------------------------------------------------------------------------
+
 	private final List<Matcher<T>> matchers;
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// constructors
+	// ----------------------------------------------------------------------------------------------------------------
+
 	public ConjunctionMatcher(List<Matcher<T>> matchers)
 	{
 		this.matchers = unmodifiableList(new ArrayList<>(matchers));
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// public methods
+	// ----------------------------------------------------------------------------------------------------------------
+
 	public ConjunctionMatcher<T> and(Matcher<T> matcher)
 	{
 		return new ConjunctionMatcher<>(concat(matchers, matcher));
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// SelfDescribing methods
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Override
 	public void describeTo(Description description)
 	{
 		description.appendList("", SEPARATOR, "", matchers);
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// TypeSafeDiagnosingMatcher methods
+	// ----------------------------------------------------------------------------------------------------------------
+
 	@Override
 	protected boolean matchesSafely(T actual, Description mismatch)
 	{
@@ -73,6 +97,10 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 		return matches;
 	}
 	
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
 	private static <T> List<T> concat(List<T> list, T element)
 	{
 		List<T> newList = new ArrayList<>(list);
