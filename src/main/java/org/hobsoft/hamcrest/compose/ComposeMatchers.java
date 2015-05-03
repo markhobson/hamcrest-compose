@@ -45,6 +45,6 @@ public final class ComposeMatchers
 	public static <T, U> Matcher<T> hasFeature(String featureName, Function<T, U> featureFunction,
 		Matcher<? super U> featureMatcher)
 	{
-		return new HasFeatureMatcher<>(featureName, featureFunction, featureMatcher);
+		return new HasFeatureMatcher<>(featureName, featureName, featureFunction, featureMatcher);
 	}
 }

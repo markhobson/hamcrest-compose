@@ -30,9 +30,10 @@ public class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 {
 	private final Function<T, U> featureFunction;
 
-	public HasFeatureMatcher(String featureName, Function<T, U> featureFunction, Matcher<? super U> featureMatcher)
+	public HasFeatureMatcher(String featureDescription, String featureName, Function<T, U> featureFunction,
+		Matcher<? super U> featureMatcher)
 	{
-		super(featureMatcher, featureName, featureName);
+		super(featureMatcher, featureDescription, featureName);
 		
 		this.featureFunction = featureFunction;
 	}
