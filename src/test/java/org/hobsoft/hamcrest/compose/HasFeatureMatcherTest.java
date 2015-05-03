@@ -13,14 +13,13 @@
  */
 package org.hobsoft.hamcrest.compose;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.hamcrest.compose.TestMatchers.nothing;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -74,33 +73,5 @@ public class HasFeatureMatcherTest
 		matcher.describeMismatch("1", description);
 		
 		assertThat(description.toString(), is("y z was <1>"));
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// private methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private static <T> Matcher<T> nothing(String mismatch)
-	{
-		return new BaseMatcher<T>()
-		{
-			@Override
-			public void describeTo(Description description)
-			{
-				description.appendText("nothing");
-			}
-			
-			@Override
-			public boolean matches(Object actual)
-			{
-				return false;
-			}
-			
-			@Override
-			public void describeMismatch(Object actual, Description description)
-			{
-				description.appendText(mismatch).appendText(" was ").appendValue(actual);
-			}
-		};
 	}
 }

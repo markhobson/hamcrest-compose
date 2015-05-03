@@ -13,9 +13,6 @@
  */
 package org.hobsoft.hamcrest.compose;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 import org.junit.Test;
 
@@ -27,6 +24,7 @@ import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.StringDescription.asString;
+import static org.hobsoft.hamcrest.compose.TestMatchers.nothing;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -162,33 +160,5 @@ public class ConjunctionMatcherTest
 		new ConjunctionMatcher<>(asList(nothing("x"), nothing("y"))).describeMismatch("z", description);
 		
 		assertThat(description.toString(), is("x was \"z\" and y was \"z\""));
-	}
-	
-	// ----------------------------------------------------------------------------------------------------------------
-	// private methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private static <T> Matcher<T> nothing(String mismatch)
-	{
-		return new BaseMatcher<T>()
-		{
-			@Override
-			public void describeTo(Description description)
-			{
-				description.appendText("nothing");
-			}
-			
-			@Override
-			public boolean matches(Object actual)
-			{
-				return false;
-			}
-			
-			@Override
-			public void describeMismatch(Object actual, Description description)
-			{
-				description.appendText(mismatch).appendText(" was ").appendValue(actual);
-			}
-		};
 	}
 }
