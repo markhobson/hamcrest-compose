@@ -35,6 +35,11 @@ public class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 	{
 		super(featureMatcher, featureDescription, featureName);
 		
+		if (featureFunction == null)
+		{
+			throw new NullPointerException("featureFunction");
+		}
+		
 		this.featureFunction = featureFunction;
 	}
 	
