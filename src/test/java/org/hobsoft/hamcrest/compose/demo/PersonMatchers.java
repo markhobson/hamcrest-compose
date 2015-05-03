@@ -16,8 +16,8 @@ package org.hobsoft.hamcrest.compose.demo;
 import org.hamcrest.Matcher;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hobsoft.hamcrest.compose.ConjunctionMatcher.compose;
-import static org.hobsoft.hamcrest.compose.HasFeatureMatcher.hasFeature;
+import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
+import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
 
 /**
  * 
