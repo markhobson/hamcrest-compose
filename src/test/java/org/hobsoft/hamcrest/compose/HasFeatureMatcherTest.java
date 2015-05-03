@@ -41,7 +41,7 @@ public class HasFeatureMatcherTest
 	public void describeToDescribesMatcher()
 	{
 		StringDescription description = new StringDescription();
-		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", Integer::parseInt, anything("z"));
+		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", String::length, anything("z"));
 		
 		matcher.describeTo(description);
 		
@@ -51,26 +51,26 @@ public class HasFeatureMatcherTest
 	@Test
 	public void matchesWhenFeatureMatcherMatchesReturnsTrue()
 	{
-		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", Integer::parseInt, is(1));
+		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", String::length, is(1));
 		
-		assertThat(matcher.matches("1"), is(true));
+		assertThat(matcher.matches("z"), is(true));
 	}
 	
 	@Test
 	public void matchesWhenFeatureMatcherDoesNotMatchReturnsFalse()
 	{
-		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", Integer::parseInt, is(2));
+		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", String::length, is(2));
 		
-		assertThat(matcher.matches("1"), is(false));
+		assertThat(matcher.matches("z"), is(false));
 	}
 	
 	@Test
 	public void describeMismatchDescribesMismatch()
 	{
 		StringDescription description = new StringDescription();
-		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", Integer::parseInt, nothing("z"));
+		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", String::length, nothing("z"));
 		
-		matcher.describeMismatch("1", description);
+		matcher.describeMismatch("a", description);
 		
 		assertThat(description.toString(), is("y z was <1>"));
 	}
