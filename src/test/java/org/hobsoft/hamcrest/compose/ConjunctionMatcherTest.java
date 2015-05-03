@@ -68,7 +68,7 @@ public class ConjunctionMatcherTest
 	}
 
 	@Test
-	public void describeWhenMatcherDescribesMatcher()
+	public void describeToWhenMatcherDescribesMatcher()
 	{
 		StringDescription description = new StringDescription();
 		
@@ -78,7 +78,7 @@ public class ConjunctionMatcherTest
 	}
 	
 	@Test
-	public void describeWhenMatchersDescribesMatchers()
+	public void describeToWhenMatchersDescribesMatchers()
 	{
 		StringDescription description = new StringDescription();
 		
