@@ -25,6 +25,7 @@ import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.StringDescription.asString;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -40,6 +41,24 @@ public class ConjunctionMatcherTest
 	public void constructorWithNullMatchersThrowsException()
 	{
 		new ConjunctionMatcher<>(null);
+	}
+	
+	@Test
+	public void andReturnsCompositeMatcher()
+	{
+		ConjunctionMatcher<Object> actual = new ConjunctionMatcher<>(asList(anything("x"))).and(anything("y"));
+		
+		assertThat(asString(actual), is("x and y"));
+	}
+	
+	@Test
+	public void andPreservesMatcher()
+	{
+		ConjunctionMatcher<Object> matcher = new ConjunctionMatcher<>(asList(anything("x")));
+		
+		matcher.and(anything());
+		
+		assertThat(asString(matcher), is("x"));
 	}
 	
 	@Test(expected = NullPointerException.class)
