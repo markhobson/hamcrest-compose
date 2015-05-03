@@ -62,6 +62,15 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	/**
+	 * Returns a composite matcher that comprises of this matcher logically ANDed with the specified matcher.
+	 * <p>
+	 * Note that this method returns a new matcher and does not modify this instance.
+	 * 
+	 * @param matcher
+	 *            the matcher to logically AND to this matcher
+	 * @return the composed matcher
+	 */
 	public ConjunctionMatcher<T> and(Matcher<T> matcher)
 	{
 		return new ConjunctionMatcher<>(concat(matchers, matcher));
