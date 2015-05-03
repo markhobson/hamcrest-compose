@@ -76,6 +76,8 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	 */
 	public ConjunctionMatcher<T> and(Matcher<T> matcher)
 	{
+		requireNonNull(matcher, "matcher");
+		
 		return new ConjunctionMatcher<>(concat(matchers, matcher));
 	}
 	

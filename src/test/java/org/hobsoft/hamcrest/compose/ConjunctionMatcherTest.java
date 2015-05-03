@@ -41,6 +41,12 @@ public class ConjunctionMatcherTest
 	{
 		new ConjunctionMatcher<>(null);
 	}
+	
+	@Test(expected = NullPointerException.class)
+	public void andWithNullMatcherThrowsException()
+	{
+		new ConjunctionMatcher<>(asList(anything())).and(null);
+	}
 
 	@Test
 	public void describeWhenMatcherDescribesMatcher()
