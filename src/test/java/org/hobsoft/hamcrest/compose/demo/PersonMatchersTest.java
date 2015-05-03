@@ -26,7 +26,7 @@ import static org.junit.Assert.assertThat;
 public class PersonMatchersTest
 {
 	@Test
-	public void describeDescribesExpected()
+	public void describeToDescribesExpected()
 	{
 		Person person = new Person("x", "y", "z");
 		StringDescription description = new StringDescription();
