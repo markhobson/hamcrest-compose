@@ -37,6 +37,12 @@ public class ComposeMatchersTest
 		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("xy"), is(true));
 	}
 	
+	@Test(expected = NullPointerException.class)
+	public void composeWithNullMatcherThrowsException()
+	{
+		compose(null);
+	}
+	
 	@Test
 	public void hasFeatureReturnsHasFeatureMatcher()
 	{
