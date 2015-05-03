@@ -21,6 +21,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import static java.util.Collections.unmodifiableList;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Matcher that composes a list of other matchers using a logical AND.
@@ -55,6 +56,8 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 
 	ConjunctionMatcher(List<Matcher<T>> matchers)
 	{
+		requireNonNull(matchers, "matchers");
+		
 		this.matchers = unmodifiableList(new ArrayList<>(matchers));
 	}
 	

@@ -35,6 +35,12 @@ public class ConjunctionMatcherTest
 	// ----------------------------------------------------------------------------------------------------------------
 	// tests
 	// ----------------------------------------------------------------------------------------------------------------
+	
+	@Test(expected = NullPointerException.class)
+	public void constructorWithNullMatchersThrowsException()
+	{
+		new ConjunctionMatcher<>(null);
+	}
 
 	@Test
 	public void describeWhenMatcherDescribesMatcher()
