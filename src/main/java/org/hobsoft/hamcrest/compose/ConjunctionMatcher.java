@@ -23,10 +23,17 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 import static java.util.Collections.unmodifiableList;
 
 /**
- * 
+ * Matcher that composes a list of other matchers using a logical AND.
+ * <p>
+ * This matcher differs from {@code CoreMatchers.allOf} and {@code CoreMatchers.both} by not short-circuiting
+ * evaluation. This allows it to describe all mismatches and not just the first one. It is also less verbose when
+ * describing a mismatch by not repeating the matcher's description.
+ * <p>
+ * Use {@code ComposeMatchers.compose} to obtain instances of this class. 
  * 
  * @param <T>
- *            the type of this matcher
+ *            the type of the object to be matched
+ * @see ComposeMatchers#compose(Matcher)
  */
 public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 {
