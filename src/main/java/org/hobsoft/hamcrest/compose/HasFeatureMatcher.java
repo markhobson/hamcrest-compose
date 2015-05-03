@@ -26,7 +26,7 @@ import org.hamcrest.Matcher;
  * @param <U>
  *            the type of the feature to be matched
  */
-public class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
+class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 {
 	private final Function<T, U> featureFunction;
 
