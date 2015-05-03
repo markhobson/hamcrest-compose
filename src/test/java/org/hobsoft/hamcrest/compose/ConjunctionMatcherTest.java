@@ -38,6 +38,22 @@ public class ConjunctionMatcherTest
 	// tests
 	// ----------------------------------------------------------------------------------------------------------------
 	
+	@Test
+	public void constructorWithMatcherReturnsCompositeMatcher()
+	{
+		ConjunctionMatcher<Object> actual = new ConjunctionMatcher<>(asList(anything("x")));
+		
+		assertThat(asString(actual), is("x"));
+	}
+	
+	@Test
+	public void constructorWithMatchersReturnsCompositeMatcher()
+	{
+		ConjunctionMatcher<Object> actual = new ConjunctionMatcher<>(asList(anything("x"), anything("y")));
+		
+		assertThat(asString(actual), is("x and y"));
+	}
+	
 	@Test(expected = NullPointerException.class)
 	public void constructorWithNullMatchersThrowsException()
 	{
