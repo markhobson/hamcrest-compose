@@ -15,7 +15,7 @@ package org.hobsoft.hamcrest.compose;
 
 import org.hamcrest.Matcher;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hobsoft.hamcrest.compose.ConjunctionMatcher.compose;
 import static org.hobsoft.hamcrest.compose.HasFeatureMatcher.hasFeature;
 
