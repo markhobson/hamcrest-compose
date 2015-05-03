@@ -41,10 +41,7 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	
 	public ConjunctionMatcher<T> and(Matcher<T> matcher)
 	{
-		List<Matcher<T>> newMatchers = new ArrayList<>(matchers);
-		newMatchers.add(matcher);
-		
-		return new ConjunctionMatcher<>(newMatchers);
+		return new ConjunctionMatcher<>(concat(matchers, matcher));
 	}
 	
 	@Override
@@ -74,5 +71,12 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 		}
 		
 		return matches;
+	}
+	
+	private static <T> List<T> concat(List<T> list, T element)
+	{
+		List<T> newList = new ArrayList<>(list);
+		newList.add(element);
+		return newList;
 	}
 }
