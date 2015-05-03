@@ -37,6 +37,20 @@ public final class ComposeMatchers
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 
+	/**
+	 * Returns a matcher that logically ANDs the specified matcher with any number of further matchers.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("xyz", compose(startsWith("x")).and(containsString("y")).and(endsWith("z")));
+	 * </pre>
+	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
+	 * 
+	 * @param matcher
+	 *            the first matcher to compose
+	 * @return a matcher that can compose itself with further matchers
+	 * @see ConjunctionMatcher
+	 */
 	public static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
 	{
 		return new ConjunctionMatcher<>(singletonList(matcher));
