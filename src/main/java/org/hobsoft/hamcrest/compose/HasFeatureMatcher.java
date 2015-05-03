@@ -18,6 +18,8 @@ import java.util.function.Function;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * 
  * 
@@ -43,12 +45,7 @@ class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 	{
 		super(featureMatcher, featureDescription, featureName);
 		
-		if (featureFunction == null)
-		{
-			throw new NullPointerException("featureFunction");
-		}
-		
-		this.featureFunction = featureFunction;
+		this.featureFunction = requireNonNull(featureFunction, "featureFunction");
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
