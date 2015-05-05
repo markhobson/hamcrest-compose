@@ -9,10 +9,7 @@
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.hobsoft.hamcrest</groupId>
 	<artifactId>hamcrest-compose</artifactId>
-	<packaging>jar</packaging>
-	<version>0.1.0-SNAPSHOT</version>
 	
 	<name>Hamcrest Compose</name>
 	
