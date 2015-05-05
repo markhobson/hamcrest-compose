@@ -40,7 +40,15 @@
 	<dependencyManagement>
 
 		<dependencies>
-	
+		
+			<!-- Hamcrest Compose -->
+			
+			<dependency>
+				<groupId>org.hobsoft.hamcrest</groupId>
+				<artifactId>hamcrest-compose</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		
 			<!-- Hamcrest -->
 		
 			<dependency>
@@ -63,6 +71,7 @@
 
 	<modules>
 		<module>main</module>
+		<module>demo</module>
 	</modules>
 	
 </project>
