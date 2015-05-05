@@ -15,7 +15,7 @@ package org.hobsoft.hamcrest.compose.demo;
 
 import org.hamcrest.Matcher;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
 
@@ -43,8 +43,8 @@ public final class PersonMatchers
 
 	public static Matcher<Person> personEqualTo(Person expected)
 	{
-		return compose(hasFeature("title", Person::getTitle, is(expected.getTitle())))
-			.and(hasFeature("first name", Person::getFirstName, is(expected.getFirstName())))
-			.and(hasFeature("last name", Person::getLastName, is(expected.getLastName())));
+		return compose(hasFeature("title", Person::getTitle, equalTo(expected.getTitle())))
+			.and(hasFeature("first name", Person::getFirstName, equalTo(expected.getFirstName())))
+			.and(hasFeature("last name", Person::getLastName, equalTo(expected.getLastName())));
 	}
 }
