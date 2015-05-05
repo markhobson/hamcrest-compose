@@ -82,6 +82,34 @@ public final class ComposeMatchers
 	public static <T, U> Matcher<T> hasFeature(String featureName, Function<T, U> featureFunction,
 		Matcher<? super U> featureMatcher)
 	{
-		return new HasFeatureMatcher<>(featureName, featureName, featureFunction, featureMatcher);
+		return hasFeature(featureName, featureName, featureFunction, featureMatcher);
+	}
+	
+	/**
+	 * Returns a matcher that matches the specified feature of an object.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("xyz", hasFeature("a string with length", "string length", String::length, is(3)));
+	 * </pre>
+	 * 
+	 * @param featureDescription
+	 *            a description of this feature used by {@code describeTo}
+	 * @param featureName
+	 *            the name of this feature used by {@code describeMismatch}
+	 * @param featureFunction
+	 *            a function to extract the feature from the object
+	 * @param featureMatcher
+	 *            the matcher to apply to the specified feature
+	 * @param <T>
+	 *            the type of the object to be matched
+	 * @param <U>
+	 *            the type of the feature to be matched
+	 * @return the feature matcher
+	 */
+	public static <T, U> Matcher<T> hasFeature(String featureDescription, String featureName,
+		Function<T, U> featureFunction, Matcher<? super U> featureMatcher)
+	{
+		return new HasFeatureMatcher<>(featureDescription, featureName, featureFunction, featureMatcher);
 	}
 }

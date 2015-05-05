@@ -13,11 +13,13 @@
  */
 package org.hobsoft.hamcrest.compose;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.StringDescription.asString;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
 import static org.junit.Assert.assertThat;
@@ -46,6 +48,14 @@ public class ComposeMatchersTest
 	@Test
 	public void hasFeatureReturnsHasFeatureMatcher()
 	{
-		assertThat(hasFeature("x", String::length, is(1)).matches("y"), is(true));
+		assertThat(hasFeature("x", "y", String::length, is(1)).matches("z"), is(true));
+	}
+	
+	@Test
+	public void hasFeatureWithoutDescriptionDefaultsDescription()
+	{
+		Matcher<String> matcher = hasFeature("x", String::length, is(1));
+		
+		assertThat(asString(matcher), is("x is <1>"));
 	}
 }
