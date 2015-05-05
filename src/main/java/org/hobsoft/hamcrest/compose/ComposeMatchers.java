@@ -58,7 +58,31 @@ public final class ComposeMatchers
 		
 		return new ConjunctionMatcher<>(singletonList(matcher));
 	}
-	
+
+	/**
+	 * Returns a matcher that matches the specified feature of an object.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("xyz", hasFeature(String::length, is(3)));
+	 * </pre>
+	 * 
+	 * @param featureFunction
+	 *            a function to extract the feature from the object. The string representation of this function is used
+	 *            as the feature name for {@code describeTo} and {@code describeMismatch}.
+	 * @param featureMatcher
+	 *            the matcher to apply to the specified feature
+	 * @param <T>
+	 *            the type of the object to be matched
+	 * @param <U>
+	 *            the type of the feature to be matched
+	 * @return the feature matcher
+	 */
+	public static <T, U> Matcher<T> hasFeature(Function<T, U> featureFunction, Matcher<? super U> featureMatcher)
+	{
+		return hasFeature(featureFunction.toString(), featureFunction, featureMatcher);
+	}
+
 	/**
 	 * Returns a matcher that matches the specified feature of an object.
 	 * <p>

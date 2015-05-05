@@ -13,7 +13,10 @@
  */
 package org.hobsoft.hamcrest.compose;
 
+import java.util.function.Function;
+
 import org.hamcrest.Matcher;
+import org.hamcrest.StringDescription;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -57,5 +60,45 @@ public class ComposeMatchersTest
 		Matcher<String> matcher = hasFeature("x", String::length, is(1));
 		
 		assertThat(asString(matcher), is("x is <1>"));
+	}
+
+	@Test
+	public void hasFeatureWithoutNameDefaultsDescription()
+	{
+		Matcher<String> matcher = hasFeature(stringToLength("x"), is(1));
+
+		assertThat(asString(matcher), is("x is <1>"));
+	}
+
+	@Test
+	public void hasFeatureWithoutNameDefaultsName()
+	{
+		Matcher<String> matcher = hasFeature(stringToLength("x"), is(1));
+
+		StringDescription description = new StringDescription();
+		matcher.describeMismatch("yy", description);
+		assertThat(description.toString(), is("x was <2>"));
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// private methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	private static Function<String, Integer> stringToLength(String name)
+	{
+		return new Function<String, Integer>()
+		{
+			@Override
+			public Integer apply(String string)
+			{
+				return string.length();
+			}
+
+			@Override
+			public String toString()
+			{
+				return name;
+			}
+		};
 	}
 }
