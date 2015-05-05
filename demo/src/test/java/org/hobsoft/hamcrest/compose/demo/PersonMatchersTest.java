@@ -21,7 +21,7 @@ import static org.hobsoft.hamcrest.compose.demo.PersonMatchers.personEqualTo;
 import static org.junit.Assert.assertThat;
 
 /**
- * 
+ * Tests {@code PersonMatchers}.
  */
 public class PersonMatchersTest
 {

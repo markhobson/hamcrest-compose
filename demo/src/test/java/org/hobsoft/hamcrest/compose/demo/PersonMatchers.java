@@ -20,7 +20,11 @@ import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
 
 /**
+ * Factory for {@code Person} matchers.
+ * <p>
+ * Demonstrates how to use the Hamcrest Compose {@code compose} and {@code hasFeature} matchers.
  * 
+ * @see Person
  */
 public final class PersonMatchers
 {

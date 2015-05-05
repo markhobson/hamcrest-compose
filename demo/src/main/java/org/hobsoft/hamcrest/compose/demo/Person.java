@@ -14,7 +14,7 @@
 package org.hobsoft.hamcrest.compose.demo;
 
 /**
- * 
+ * Example domain model object representing a person.
  */
 public class Person
 {
