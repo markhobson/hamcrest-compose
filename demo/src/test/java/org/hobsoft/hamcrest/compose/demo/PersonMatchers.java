@@ -43,7 +43,7 @@ public final class PersonMatchers
 
 	public static Matcher<Person> personEqualTo(Person expected)
 	{
-		return compose(hasFeature("title", Person::getTitle, equalTo(expected.getTitle())))
+		return compose("a person with", hasFeature("title", Person::getTitle, equalTo(expected.getTitle())))
 			.and(hasFeature("first name", Person::getFirstName, equalTo(expected.getFirstName())))
 			.and(hasFeature("last name", Person::getLastName, equalTo(expected.getLastName())));
 	}
