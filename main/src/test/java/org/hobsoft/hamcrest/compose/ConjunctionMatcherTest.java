@@ -34,14 +34,6 @@ public class ConjunctionMatcherTest
 	// tests
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	@Test
-	public void composeWithMatcherReturnsCompositeMatcher()
-	{
-		ConjunctionMatcher<Object> actual = compose(anything("x"));
-		
-		assertThat(asString(actual), is("x"));
-	}
-	
 	@Test(expected = NullPointerException.class)
 	public void composeWithNullMatcherThrowsException()
 	{
