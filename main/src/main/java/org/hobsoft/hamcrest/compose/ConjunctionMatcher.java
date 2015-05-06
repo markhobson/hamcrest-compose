@@ -20,6 +20,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
 
@@ -69,6 +70,13 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// ----------------------------------------------------------------------------------------------------------------
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
+	
+	public static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
+	{
+		requireNonNull(matcher, "matcher");
+		
+		return new ConjunctionMatcher<>(singletonList(matcher));
+	}
 
 	/**
 	 * Returns a composite matcher that comprises of this matcher logically ANDed with the specified matcher.

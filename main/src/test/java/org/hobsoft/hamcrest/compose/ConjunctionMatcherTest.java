@@ -16,14 +16,12 @@ package org.hobsoft.hamcrest.compose;
 import org.hamcrest.StringDescription;
 import org.junit.Test;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
-
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.StringDescription.asString;
+import static org.hobsoft.hamcrest.compose.ConjunctionMatcher.compose;
 import static org.hobsoft.hamcrest.compose.TestMatchers.nothing;
 import static org.junit.Assert.assertThat;
 
@@ -37,37 +35,23 @@ public class ConjunctionMatcherTest
 	// ----------------------------------------------------------------------------------------------------------------
 	
 	@Test
-	public void constructorWithMatcherReturnsCompositeMatcher()
+	public void composeWithMatcherReturnsCompositeMatcher()
 	{
-		ConjunctionMatcher<Object> actual = new ConjunctionMatcher<>(asList(anything("x")));
+		ConjunctionMatcher<Object> actual = compose(anything("x"));
 		
 		assertThat(asString(actual), is("x"));
 	}
 	
-	@Test
-	public void constructorWithMatchersReturnsCompositeMatcher()
-	{
-		ConjunctionMatcher<Object> actual = new ConjunctionMatcher<>(asList(anything("x"), anything("y")));
-		
-		assertThat(asString(actual), is("x and y"));
-	}
-	
 	@Test(expected = NullPointerException.class)
-	public void constructorWithNullMatchersThrowsException()
+	public void composeWithNullMatcherThrowsException()
 	{
-		new ConjunctionMatcher<>(null);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void constructorWithEmptyMatchersThrowsException()
-	{
-		new ConjunctionMatcher<>(emptyList());
+		compose(null);
 	}
 	
 	@Test
 	public void andReturnsCompositeMatcher()
 	{
-		ConjunctionMatcher<Object> actual = new ConjunctionMatcher<>(asList(anything("x"))).and(anything("y"));
+		ConjunctionMatcher<Object> actual = compose(anything("x")).and(anything("y"));
 		
 		assertThat(asString(actual), is("x and y"));
 	}
@@ -75,7 +59,7 @@ public class ConjunctionMatcherTest
 	@Test
 	public void andPreservesMatcher()
 	{
-		ConjunctionMatcher<Object> matcher = new ConjunctionMatcher<>(asList(anything("x")));
+		ConjunctionMatcher<Object> matcher = compose(anything("x"));
 		
 		matcher.and(anything());
 		
@@ -85,7 +69,7 @@ public class ConjunctionMatcherTest
 	@Test(expected = NullPointerException.class)
 	public void andWithNullMatcherThrowsException()
 	{
-		new ConjunctionMatcher<>(asList(anything())).and(null);
+		compose(anything()).and(null);
 	}
 
 	@Test
@@ -93,7 +77,7 @@ public class ConjunctionMatcherTest
 	{
 		StringDescription description = new StringDescription();
 		
-		new ConjunctionMatcher<>(asList(anything("x"))).describeTo(description);
+		compose(anything("x")).describeTo(description);
 		
 		assertThat(description.toString(), is("x"));
 	}
@@ -103,7 +87,7 @@ public class ConjunctionMatcherTest
 	{
 		StringDescription description = new StringDescription();
 		
-		new ConjunctionMatcher<>(asList(anything("x"), anything("y"))).describeTo(description);
+		compose(anything("x")).and(anything("y")).describeTo(description);
 		
 		assertThat(description.toString(), is("x and y"));
 	}
@@ -111,25 +95,25 @@ public class ConjunctionMatcherTest
 	@Test
 	public void matchesWhenMatchersMatchReturnsTrue()
 	{
-		assertThat(new ConjunctionMatcher<>(asList(startsWith("x"), endsWith("y"))).matches("xy"), is(true));
+		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("xy"), is(true));
 	}
 	
 	@Test
 	public void matchesWhenFirstMatcherDoesNotMatchReturnsFalse()
 	{
-		assertThat(new ConjunctionMatcher<>(asList(startsWith("x"), endsWith("y"))).matches("zy"), is(false));
+		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("zy"), is(false));
 	}
 	
 	@Test
 	public void matchesWhenSecondMatcherDoesNotMatchReturnsFalse()
 	{
-		assertThat(new ConjunctionMatcher<>(asList(startsWith("x"), endsWith("y"))).matches("xz"), is(false));
+		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("xz"), is(false));
 	}
 	
 	@Test
 	public void matchesWhenMatchersDoNotMatchReturnsFalse()
 	{
-		assertThat(new ConjunctionMatcher<>(asList(startsWith("x"), endsWith("y"))).matches("z"), is(false));
+		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("z"), is(false));
 	}
 	
 	@Test
@@ -137,7 +121,7 @@ public class ConjunctionMatcherTest
 	{
 		StringDescription description = new StringDescription();
 		
-		new ConjunctionMatcher<>(asList(nothing("x"), anything())).describeMismatch("y", description);
+		compose(nothing("x")).and(anything()).describeMismatch("y", description);
 		
 		assertThat(description.toString(), is("x was \"y\""));
 	}
@@ -147,7 +131,7 @@ public class ConjunctionMatcherTest
 	{
 		StringDescription description = new StringDescription();
 		
-		new ConjunctionMatcher<>(asList(anything(), nothing("x"))).describeMismatch("y", description);
+		compose(anything()).and(nothing("x")).describeMismatch("y", description);
 		
 		assertThat(description.toString(), is("x was \"y\""));
 	}
@@ -157,7 +141,7 @@ public class ConjunctionMatcherTest
 	{
 		StringDescription description = new StringDescription();
 		
-		new ConjunctionMatcher<>(asList(nothing("x"), nothing("y"))).describeMismatch("z", description);
+		compose(nothing("x")).and(nothing("y")).describeMismatch("z", description);
 		
 		assertThat(description.toString(), is("x was \"z\" and y was \"z\""));
 	}
