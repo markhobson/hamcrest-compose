@@ -43,8 +43,8 @@ public class HasFeatureMatcherTest
 	@Test
 	public void describeToDescribesMatcher()
 	{
-		StringDescription description = new StringDescription();
 		Matcher<String> matcher = hasFeature("x", "y", String::length, anything("z"));
+		StringDescription description = new StringDescription();
 		
 		matcher.describeTo(description);
 		
@@ -54,8 +54,8 @@ public class HasFeatureMatcherTest
 	@Test
 	public void describeToWhenNoDescriptionUsesName()
 	{
-		StringDescription description = new StringDescription();
 		Matcher<String> matcher = hasFeature("x", String::length, anything("y"));
+		StringDescription description = new StringDescription();
 		
 		matcher.describeTo(description);
 		
@@ -65,8 +65,8 @@ public class HasFeatureMatcherTest
 	@Test
 	public void describeToWhenNoNameUsesFunction()
 	{
-		StringDescription description = new StringDescription();
 		Matcher<String> matcher = hasFeature(stringToLength("x"), anything("y"));
+		StringDescription description = new StringDescription();
 		
 		matcher.describeTo(description);
 		
@@ -92,8 +92,8 @@ public class HasFeatureMatcherTest
 	@Test
 	public void describeMismatchDescribesMismatch()
 	{
-		StringDescription description = new StringDescription();
 		Matcher<String> matcher = hasFeature("x", "y", String::length, nothing("z"));
+		StringDescription description = new StringDescription();
 		
 		matcher.describeMismatch("a", description);
 		
@@ -103,8 +103,8 @@ public class HasFeatureMatcherTest
 	@Test
 	public void describeMismatchWhenNoNameUsesFunction()
 	{
-		StringDescription description = new StringDescription();
 		Matcher<String> matcher = hasFeature(stringToLength("x"), nothing("y"));
+		StringDescription description = new StringDescription();
 		
 		matcher.describeMismatch("a", description);
 		
