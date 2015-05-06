@@ -35,6 +35,14 @@ public class ComposeMatchersTest
 	@Test
 	public void composeReturnsMatcher()
 	{
+		Matcher<String> actual = compose("x", startsWith("y")).and(endsWith("z"));
+		
+		assertThat(actual.matches("yz"), is(true));
+	}
+	
+	@Test
+	public void composeWithoutDescriptionReturnsMatcher()
+	{
 		Matcher<String> actual = compose(startsWith("x")).and(endsWith("y"));
 		
 		assertThat(actual.matches("xy"), is(true));

@@ -43,21 +43,21 @@ public class ConjunctionMatcherTest
 	@Test
 	public void andReturnsCompositeMatcher()
 	{
-		ConjunctionMatcher<Object> matcher = compose(anything("x"));
+		ConjunctionMatcher<Object> matcher = compose("x", anything("y"));
 		
-		ConjunctionMatcher<Object> actual = matcher.and(anything("y"));
+		ConjunctionMatcher<Object> actual = matcher.and(anything("z"));
 		
-		assertThat(asString(actual), is("x and y"));
+		assertThat(asString(actual), is("x y and z"));
 	}
 	
 	@Test
 	public void andPreservesMatcher()
 	{
-		ConjunctionMatcher<Object> matcher = compose(anything("x"));
+		ConjunctionMatcher<Object> matcher = compose("x", anything("y"));
 		
 		matcher.and(anything());
 		
-		assertThat(asString(matcher), is("x"));
+		assertThat(asString(matcher), is("x y"));
 	}
 	
 	@Test(expected = NullPointerException.class)
@@ -73,9 +73,9 @@ public class ConjunctionMatcherTest
 	{
 		StringDescription description = new StringDescription();
 		
-		compose(anything("x")).describeTo(description);
+		compose("x", anything("y")).describeTo(description);
 		
-		assertThat(description.toString(), is("x"));
+		assertThat(description.toString(), is("x y"));
 	}
 	
 	@Test
@@ -83,9 +83,19 @@ public class ConjunctionMatcherTest
 	{
 		StringDescription description = new StringDescription();
 		
-		compose(anything("x")).and(anything("y")).describeTo(description);
+		compose("x", anything("y")).and(anything("z")).describeTo(description);
 		
-		assertThat(description.toString(), is("x and y"));
+		assertThat(description.toString(), is("x y and z"));
+	}
+	
+	@Test
+	public void describeToWhenNoDescriptionOmitsPrefix()
+	{
+		StringDescription description = new StringDescription();
+		
+		compose(anything("x")).describeTo(description);
+		
+		assertThat(description.toString(), is("x"));
 	}
 	
 	@Test

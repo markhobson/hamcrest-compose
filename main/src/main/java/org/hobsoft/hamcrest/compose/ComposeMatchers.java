@@ -53,6 +53,27 @@ public final class ComposeMatchers
 	{
 		return ConjunctionMatcher.compose(matcher);
 	}
+	
+	/**
+	 * Returns a matcher that logically ANDs the specified matcher with any number of further matchers.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("xyz", compose("a word with", startsWith("x")).and(containsString("y")).and(endsWith("z")));
+	 * </pre>
+	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
+	 * 
+	 * @param compositeDescription
+	 *            a description of this composite used by {@code describeTo}
+	 * @param matcher
+	 *            the first matcher to compose
+	 * @return a matcher that can compose itself with further matchers
+	 * @see ConjunctionMatcher
+	 */
+	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Matcher<T> matcher)
+	{
+		return ConjunctionMatcher.compose(compositeDescription, matcher);
+	}
 
 	/**
 	 * Returns a matcher that matches the specified feature of an object.

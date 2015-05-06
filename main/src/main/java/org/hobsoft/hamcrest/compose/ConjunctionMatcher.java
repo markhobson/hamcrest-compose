@@ -49,13 +49,15 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 
+	private final String compositeDescription;
+	
 	private final List<Matcher<T>> matchers;
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	ConjunctionMatcher(List<Matcher<T>> matchers)
+	ConjunctionMatcher(String compositeDescription, List<Matcher<T>> matchers)
 	{
 		requireNonNull(matchers, "matchers");
 		
@@ -64,6 +66,7 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 			throw new IllegalArgumentException("matchers cannot be empty");
 		}
 		
+		this.compositeDescription = compositeDescription;
 		this.matchers = unmodifiableList(new ArrayList<>(matchers));
 	}
 	
@@ -73,11 +76,16 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	
 	public static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
 	{
-		requireNonNull(matcher, "matcher");
-		
-		return new ConjunctionMatcher<>(singletonList(matcher));
+		return compose(null, matcher);
 	}
 
+	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Matcher<T> matcher)
+	{
+		requireNonNull(matcher, "matcher");
+		
+		return new ConjunctionMatcher<>(compositeDescription, singletonList(matcher));
+	}
+	
 	/**
 	 * Returns a composite matcher that comprises of this matcher logically ANDed with the specified matcher.
 	 * <p>
@@ -91,7 +99,7 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	{
 		requireNonNull(matcher, "matcher");
 		
-		return new ConjunctionMatcher<>(concat(matchers, matcher));
+		return new ConjunctionMatcher<>(compositeDescription, concat(matchers, matcher));
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -101,7 +109,9 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	@Override
 	public void describeTo(Description description)
 	{
-		description.appendList("", SEPARATOR, "", matchers);
+		String start = (compositeDescription != null) ? compositeDescription + " " : "";
+		
+		description.appendList(start, SEPARATOR, "", matchers);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
