@@ -51,7 +51,9 @@ public class ConjunctionMatcherTest
 	@Test
 	public void andReturnsCompositeMatcher()
 	{
-		ConjunctionMatcher<Object> actual = compose(anything("x")).and(anything("y"));
+		ConjunctionMatcher<Object> matcher = compose(anything("x"));
+		
+		ConjunctionMatcher<Object> actual = matcher.and(anything("y"));
 		
 		assertThat(asString(actual), is("x and y"));
 	}
@@ -69,7 +71,9 @@ public class ConjunctionMatcherTest
 	@Test(expected = NullPointerException.class)
 	public void andWithNullMatcherThrowsException()
 	{
-		compose(anything()).and(null);
+		ConjunctionMatcher<Object> matcher = compose(anything());
+		
+		matcher.and(null);
 	}
 
 	@Test
@@ -95,33 +99,42 @@ public class ConjunctionMatcherTest
 	@Test
 	public void matchesWhenMatchersMatchReturnsTrue()
 	{
-		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("xy"), is(true));
+		ConjunctionMatcher<String> matcher = compose(startsWith("x")).and(endsWith("y"));
+		
+		assertThat(matcher.matches("xy"), is(true));
 	}
 	
 	@Test
 	public void matchesWhenFirstMatcherDoesNotMatchReturnsFalse()
 	{
-		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("zy"), is(false));
+		ConjunctionMatcher<String> matcher = compose(startsWith("x")).and(endsWith("y"));
+		
+		assertThat(matcher.matches("zy"), is(false));
 	}
 	
 	@Test
 	public void matchesWhenSecondMatcherDoesNotMatchReturnsFalse()
 	{
-		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("xz"), is(false));
+		ConjunctionMatcher<String> matcher = compose(startsWith("x")).and(endsWith("y"));
+		
+		assertThat(matcher.matches("xz"), is(false));
 	}
 	
 	@Test
 	public void matchesWhenMatchersDoNotMatchReturnsFalse()
 	{
-		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("z"), is(false));
+		ConjunctionMatcher<String> matcher = compose(startsWith("x")).and(endsWith("y"));
+		
+		assertThat(matcher.matches("z"), is(false));
 	}
 	
 	@Test
 	public void describeMismatchWhenFirstMatcherDoesNotMatchDescribesMismatch()
 	{
+		ConjunctionMatcher<Object> matcher = compose(nothing("x")).and(anything());
 		StringDescription description = new StringDescription();
 		
-		compose(nothing("x")).and(anything()).describeMismatch("y", description);
+		matcher.describeMismatch("y", description);
 		
 		assertThat(description.toString(), is("x was \"y\""));
 	}
@@ -129,9 +142,10 @@ public class ConjunctionMatcherTest
 	@Test
 	public void describeMismatchWhenSecondMatcherDoesNotMatchDescribesMismatch()
 	{
+		ConjunctionMatcher<Object> matcher = compose(anything()).and(nothing("x"));
 		StringDescription description = new StringDescription();
 		
-		compose(anything()).and(nothing("x")).describeMismatch("y", description);
+		matcher.describeMismatch("y", description);
 		
 		assertThat(description.toString(), is("x was \"y\""));
 	}
@@ -139,9 +153,10 @@ public class ConjunctionMatcherTest
 	@Test
 	public void describeMismatchWhenMatchersDoNotMatchDescribesMismatches()
 	{
+		ConjunctionMatcher<Object> matcher = compose(nothing("x")).and(nothing("y"));
 		StringDescription description = new StringDescription();
 		
-		compose(nothing("x")).and(nothing("y")).describeMismatch("z", description);
+		matcher.describeMismatch("z", description);
 		
 		assertThat(description.toString(), is("x was \"z\" and y was \"z\""));
 	}
