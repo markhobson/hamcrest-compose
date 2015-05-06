@@ -40,12 +40,6 @@ public class ComposeMatchersTest
 		assertThat(actual.matches("xy"), is(true));
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void composeWithNullMatcherThrowsException()
-	{
-		compose(null);
-	}
-	
 	@Test
 	public void hasFeatureReturnsMatcher()
 	{
