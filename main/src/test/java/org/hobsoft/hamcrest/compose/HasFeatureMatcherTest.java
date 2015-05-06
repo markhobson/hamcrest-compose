@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.hamcrest.compose.HasFeatureMatcher.hasFeature;
 import static org.hobsoft.hamcrest.compose.TestMatchers.nothing;
 import static org.junit.Assert.assertThat;
 
@@ -32,16 +33,16 @@ public class HasFeatureMatcherTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test(expected = NullPointerException.class)
-	public void constructorWithNullFunctionThrowsException()
+	public void hasFeatureWithNullFunctionThrowsException()
 	{
-		new HasFeatureMatcher<>("x", "y", null, anything());
+		hasFeature("x", "y", null, anything());
 	}
 	
 	@Test
 	public void describeToDescribesMatcher()
 	{
 		StringDescription description = new StringDescription();
-		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", String::length, anything("z"));
+		Matcher<String> matcher = hasFeature("x", "y", String::length, anything("z"));
 		
 		matcher.describeTo(description);
 		
@@ -51,7 +52,7 @@ public class HasFeatureMatcherTest
 	@Test
 	public void matchesWhenFeatureMatcherMatchesReturnsTrue()
 	{
-		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", String::length, is(1));
+		Matcher<String> matcher = hasFeature("x", "y", String::length, is(1));
 		
 		assertThat(matcher.matches("z"), is(true));
 	}
@@ -59,7 +60,7 @@ public class HasFeatureMatcherTest
 	@Test
 	public void matchesWhenFeatureMatcherDoesNotMatchReturnsFalse()
 	{
-		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", String::length, is(2));
+		Matcher<String> matcher = hasFeature("x", "y", String::length, is(2));
 		
 		assertThat(matcher.matches("z"), is(false));
 	}
@@ -68,7 +69,7 @@ public class HasFeatureMatcherTest
 	public void describeMismatchDescribesMismatch()
 	{
 		StringDescription description = new StringDescription();
-		Matcher<String> matcher = new HasFeatureMatcher<>("x", "y", String::length, nothing("z"));
+		Matcher<String> matcher = hasFeature("x", "y", String::length, nothing("z"));
 		
 		matcher.describeMismatch("a", description);
 		

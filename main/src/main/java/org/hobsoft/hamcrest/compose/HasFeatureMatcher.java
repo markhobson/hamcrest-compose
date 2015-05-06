@@ -52,6 +52,27 @@ class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
+	// public methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public static <T, U> Matcher<T> hasFeature(Function<T, U> featureFunction, Matcher<? super U> featureMatcher)
+	{
+		return hasFeature(featureFunction.toString(), featureFunction, featureMatcher);
+	}
+	
+	public static <T, U> Matcher<T> hasFeature(String featureName, Function<T, U> featureFunction,
+		Matcher<? super U> featureMatcher)
+	{
+		return hasFeature(featureName, featureName, featureFunction, featureMatcher);
+	}
+	
+	public static <T, U> Matcher<T> hasFeature(String featureDescription, String featureName,
+		Function<T, U> featureFunction, Matcher<? super U> featureMatcher)
+	{
+		return new HasFeatureMatcher<>(featureDescription, featureName, featureFunction, featureMatcher);
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
 	// FeatureMatcher methods
 	// ----------------------------------------------------------------------------------------------------------------
 
