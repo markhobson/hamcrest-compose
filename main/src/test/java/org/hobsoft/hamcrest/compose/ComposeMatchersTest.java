@@ -13,16 +13,12 @@
  */
 package org.hobsoft.hamcrest.compose;
 
-import java.util.function.Function;
-
 import org.hamcrest.Matcher;
-import org.hamcrest.StringDescription;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
-import static org.hamcrest.StringDescription.asString;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
 import static org.junit.Assert.assertThat;
@@ -49,56 +45,26 @@ public class ComposeMatchersTest
 	}
 	
 	@Test
-	public void hasFeatureReturnsHasFeatureMatcher()
+	public void hasFeatureReturnsMatcher()
 	{
-		assertThat(hasFeature("x", "y", String::length, is(1)).matches("z"), is(true));
+		Matcher<String> actual = hasFeature("x", "y", String::length, is(1));
+		
+		assertThat(actual.matches("z"), is(true));
 	}
 	
 	@Test
-	public void hasFeatureWithoutDescriptionDefaultsDescription()
+	public void hasFeatureWithoutDescriptionReturnsMatcher()
 	{
-		Matcher<String> matcher = hasFeature("x", String::length, is(1));
+		Matcher<String> actual = hasFeature("x", String::length, is(1));
 		
-		assertThat(asString(matcher), is("x is <1>"));
+		assertThat(actual.matches("y"), is(true));
 	}
 
 	@Test
-	public void hasFeatureWithoutNameDefaultsDescription()
+	public void hasFeatureWithoutNameReturnsMatcher()
 	{
-		Matcher<String> matcher = hasFeature(stringToLength("x"), is(1));
+		Matcher<String> actual = hasFeature(String::length, is(1));
 
-		assertThat(asString(matcher), is("x is <1>"));
-	}
-
-	@Test
-	public void hasFeatureWithoutNameDefaultsName()
-	{
-		Matcher<String> matcher = hasFeature(stringToLength("x"), is(1));
-
-		StringDescription description = new StringDescription();
-		matcher.describeMismatch("yy", description);
-		assertThat(description.toString(), is("x was <2>"));
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
-	// private methods
-	// ----------------------------------------------------------------------------------------------------------------
-
-	private static Function<String, Integer> stringToLength(String name)
-	{
-		return new Function<String, Integer>()
-		{
-			@Override
-			public Integer apply(String string)
-			{
-				return string.length();
-			}
-
-			@Override
-			public String toString()
-			{
-				return name;
-			}
-		};
+		assertThat(actual.matches("x"), is(true));
 	}
 }
