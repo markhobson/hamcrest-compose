@@ -33,9 +33,11 @@ public class ComposeMatchersTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void composeReturnsConjunctionMatcher()
+	public void composeReturnsMatcher()
 	{
-		assertThat(compose(startsWith("x")).and(endsWith("y")).matches("xy"), is(true));
+		Matcher<String> actual = compose(startsWith("x")).and(endsWith("y"));
+		
+		assertThat(actual.matches("xy"), is(true));
 	}
 	
 	@Test(expected = NullPointerException.class)
