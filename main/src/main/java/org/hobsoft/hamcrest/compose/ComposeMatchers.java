@@ -40,7 +40,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("xyz", compose(startsWith("x")).and(containsString("y")).and(endsWith("z")));
+	 * assertThat("ham", compose(startsWith("h")).and(containsString("a")).and(endsWith("m")));
 	 * </pre>
 	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
 	 * 
@@ -59,7 +59,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("xyz", compose("a word with", startsWith("x")).and(containsString("y")).and(endsWith("z")));
+	 * assertThat("ham", compose("a word with", startsWith("h")).and(containsString("a")).and(endsWith("m")));
 	 * </pre>
 	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
 	 * 
@@ -80,7 +80,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("xyz", hasFeature(String::length, is(3)));
+	 * assertThat("ham", hasFeature(String::length, is(3)));
 	 * </pre>
 	 * 
 	 * @param featureFunction
@@ -104,7 +104,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("xyz", hasFeature("string length", String::length, is(3)));
+	 * assertThat("ham", hasFeature("string length", String::length, is(3)));
 	 * </pre>
 	 * 
 	 * @param featureName
@@ -130,7 +130,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("xyz", hasFeature("a string with length", "string length", String::length, is(3)));
+	 * assertThat("ham", hasFeature("a string with length", "string length", String::length, is(3)));
 	 * </pre>
 	 * 
 	 * @param featureDescription
