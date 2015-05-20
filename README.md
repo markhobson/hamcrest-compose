@@ -8,6 +8,8 @@ This library provides [Hamcrest](http://hamcrest.org/) matchers to easily build 
 			.and(hasFeature("last name", Person::getLastName, equalTo(expected.getLastName())));
 	}
 
+See the [demo](demo) module to run this example.
+
 ## Getting started
 
 Hamcrest Compose is available in the [Maven Central repository](http://search.maven.org/). Start by adding a dependency to your Maven project:
