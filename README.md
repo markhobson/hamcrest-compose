@@ -52,3 +52,5 @@ This feature description is also used to describe any mismatches. To specify a f
 ## License
 
 * [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+[![Build Status](https://travis-ci.org/markhobson/hamcrest-compose.svg?branch=master)](https://travis-ci.org/markhobson/hamcrest-compose)
