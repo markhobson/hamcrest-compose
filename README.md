@@ -29,7 +29,7 @@ This factory method builds a composite matcher that logically ANDs a number of o
 
 	assertThat("ham", compose(startsWith("h")).and(containsString("a")).and(endsWith("m")));
 
-This differs from Hamcrest's composite matchers [CoreMatchers.allOf](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/CoreMatchers.html#allOf(org.hamcrest.Matcher...)) and [CoreMatchers.both](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/CoreMatchers.html#both(org.hamcrest.Matcher)) in the following ways:
+This differs from Hamcrest's composite matchers [allOf](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/CoreMatchers.html#allOf(org.hamcrest.Matcher...)) and [both](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/CoreMatchers.html#both(org.hamcrest.Matcher)) in the following ways:
 
 * It does not short circuit. This means that all mismatches are reported, not just the first one.
 * It does not describe itself using parenthesis. This produces more readable descriptions.
