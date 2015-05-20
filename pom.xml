@@ -15,6 +15,45 @@
 	<version>0.1.0-SNAPSHOT</version>
 	
 	<name>Hamcrest Compose Parent</name>
+	<description>Hamcrest matchers for composition.</description>
+	<url>https://github.com/markhobson/hamcrest-compose</url>
+	<inceptionYear>2015</inceptionYear>
+	
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<scm>
+		<connection>scm:git:git@github.com:markhobson/hamcrest-compose.git</connection>
+		<developerConnection>scm:git:git@github.com:markhobson/hamcrest-compose.git</developerConnection>
+		<url>https://github.com/markhobson/hamcrest-compose</url>
+	</scm>
+	
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/markhobson/hamcrest-compose/issues</url>
+	</issueManagement>
+	
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/markhobson/hamcrest-compose</url>
+	</ciManagement>
+	
+	<developers>
+		<developer>
+			<id>markhobson</id>
+			<name>Mark Hobson</name>
+			<email>markhobson@gmail.com</email>
+			<roles>
+				<role>Project Lead</role>
+			</roles>
+			<timezone>0</timezone>
+		</developer>
+	</developers>
 	
 	<build>
 	
