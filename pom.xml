@@ -70,6 +70,14 @@
 					</configuration>
 				</plugin>
 			
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-scm-publish-plugin</artifactId>
+					<configuration>
+						<scmBranch>gh-pages</scmBranch>
+					</configuration>
+				</plugin>
+
 			</plugins>
 		
 		</pluginManagement>
@@ -107,6 +115,38 @@
 		</dependencies>
 
 	</dependencyManagement>
+	
+	<reporting>
+		<excludeDefaults>true</excludeDefaults>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<configuration>
+					<links>
+						<link>https://docs.oracle.com/javase/8/docs/api</link>
+						<link>http://hamcrest.org/JavaHamcrest/javadoc/1.3</link>
+					</links>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<distributionManagement>
+		<site>
+			<id>site</id>
+			<name>Hamcrest Compose Maven Site</name>
+			<url>scm:git:git@github.com:markhobson/hamcrest-compose.git</url>
+		</site>
+	</distributionManagement>
 
 	<modules>
 		<module>main</module>
