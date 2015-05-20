@@ -23,7 +23,7 @@ Hamcrest Compose is available in the [Maven Central repository](http://search.ma
 
 Hamcrest Compose provides two matchers:
 
-### `ComposeMatchers.compose`
+### ComposeMatchers.compose
 
 This factory method builds a composite matcher that logically ANDs a number of other matchers. For example:
 
@@ -35,7 +35,7 @@ This differs from Hamcrest's composite matchers `CoreMatchers.allOf` and `CoreMa
 * It does not describe itself using parenthesis. This produces more readable descriptions.
 * It supports an optional description to help describe the composition
 
-### `ComposeMatchers.hasFeature`
+### ComposeMatchers.hasFeature
 
 This factory method builds a matcher that matches a 'feature' of an object. A feature is any value that can be obtained from the object by a [Function](https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html). Typically this is a lambda such as a method reference, for example:
 
