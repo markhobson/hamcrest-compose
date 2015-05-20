@@ -41,7 +41,7 @@ This factory method builds a matcher that matches a 'feature' of an object. A fe
 
 	assertThat(person, hasFeature(Person::getFirstName, equalTo("ham")));
 
-By default this matcher will describe itself and any mismatches by using the `toString()` of the feature function. When using lambdas this is not particularly informative so a feature description can be specified: 
+By default this matcher will describe itself and any mismatches by using the `toString` method of the feature function. When using lambdas this is not particularly informative so a feature description can be specified: 
 
 	assertThat(person, hasFeature("a person with first name", Person::getFirstName, equalTo("ham")));
 	
