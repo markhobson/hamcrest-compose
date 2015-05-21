@@ -27,9 +27,13 @@ import static java.util.Objects.requireNonNull;
 /**
  * Matcher that composes a list of other matchers using a logical AND.
  * <p>
- * This matcher differs from {@code CoreMatchers.allOf} and {@code CoreMatchers.both} by not short-circuiting
- * evaluation. This allows it to describe all mismatches and not just the first one. It is also less verbose when
- * describing a mismatch by not repeating the matcher's description.
+ * This matcher differs from {@code CoreMatchers.allOf} and {@code CoreMatchers.both} in the following ways:
+ * <ul>
+ * <li>It does not short circuit. This means that all mismatches are reported, not just the first one.
+ * <li>It does not describe itself using parenthesis. This produces more readable descriptions.
+ * <li>It supports an optional description to help describe the composition
+ * <li>It does not repeat the matcher's description when describing a mismatch
+ * </ul>
  * <p>
  * Use {@code ComposeMatchers.compose} to obtain instances of this class. 
  * 
