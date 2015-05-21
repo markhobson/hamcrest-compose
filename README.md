@@ -36,6 +36,7 @@ This differs from Hamcrest's composite matchers [allOf](http://hamcrest.org/Java
 * It does not short circuit. This means that all mismatches are reported, not just the first one.
 * It does not describe itself using parenthesis. This produces more readable descriptions.
 * It supports an optional description to help describe the composition
+* It does not repeat the matcher's description when describing a mismatch
 
 ### ComposeMatchers.hasFeature
 
