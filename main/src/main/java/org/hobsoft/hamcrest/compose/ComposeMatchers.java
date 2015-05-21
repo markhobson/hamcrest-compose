@@ -46,6 +46,8 @@ public final class ComposeMatchers
 	 * 
 	 * @param matcher
 	 *            the first matcher to compose
+	 * @param <T>
+	 *            the type of the object to be matched
 	 * @return a matcher that can compose itself with further matchers
 	 * @see ConjunctionMatcher
 	 */
@@ -67,6 +69,8 @@ public final class ComposeMatchers
 	 *            a description of this composite used by {@code describeTo}
 	 * @param matcher
 	 *            the first matcher to compose
+	 * @param <T>
+	 *            the type of the object to be matched
 	 * @return a matcher that can compose itself with further matchers
 	 * @see ConjunctionMatcher
 	 */
