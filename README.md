@@ -51,6 +51,10 @@ This feature description is also used to describe any mismatches. To specify a f
 
 	assertThat(person, hasFeature("a person with first name", "first name", Person::getFirstName, equalTo("ham")));
 
+## Links
+
+* [Javadoc](http://www.hobsoft.org/hamcrest-compose/hamcrest-compose/apidocs/)
+
 ## License
 
 * [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
