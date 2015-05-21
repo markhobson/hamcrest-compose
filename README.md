@@ -17,7 +17,7 @@ Hamcrest Compose is available in the [Maven Central repository](http://search.ma
 	<dependency>
 		<groupId>org.hobsoft.hamcrest</groupId>
 		<artifactId>hamcrest-compose</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.1.0</version>
 		<scope>test</scope>
 	</dependency>
 
