@@ -8,7 +8,7 @@ This library provides [Hamcrest](http://hamcrest.org/) matchers to easily build 
 			.and(hasFeature("last name", Person::getLastName, equalTo(expected.getLastName())));
 	}
 
-See the [demo](demo) module to run this example.
+See the [demo](demo) module to run this example. The [PersonMatchersTest](demo/src/test/java/org/hobsoft/hamcrest/compose/demo/PersonMatchersTest.java) test case defines the behaviour of this matcher. 
 
 ## Getting started
 
