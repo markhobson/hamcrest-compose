@@ -1,6 +1,6 @@
 # Hamcrest Compose
 
-This library provides [Hamcrest](http://hamcrest.org/) matchers to easily build composite matchers for aggregate objects. For example:
+This library provides [Hamcrest](http://hamcrest.org/) matchers to easily build composite matchers for objects. For example:
 
 	public static Matcher<Person> personEqualTo(Person expected) {
 		return compose("a person with", hasFeature("title", Person::getTitle, equalTo(expected.getTitle())))
