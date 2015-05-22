@@ -41,7 +41,7 @@ import static java.util.Objects.requireNonNull;
  *            the type of the object to be matched
  * @see ComposeMatchers#compose(Matcher)
  */
-public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
+public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// constants
@@ -61,7 +61,7 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	ConjunctionMatcher(String compositeDescription, List<Matcher<T>> matchers)
+	private ConjunctionMatcher(String compositeDescription, List<Matcher<T>> matchers)
 	{
 		requireNonNull(matchers, "matchers");
 		
