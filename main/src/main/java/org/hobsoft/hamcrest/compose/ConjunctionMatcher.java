@@ -78,18 +78,6 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// public methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	public static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
-	{
-		return compose(null, matcher);
-	}
-
-	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Matcher<T> matcher)
-	{
-		requireNonNull(matcher, "matcher");
-		
-		return new ConjunctionMatcher<>(compositeDescription, singletonList(matcher));
-	}
-	
 	/**
 	 * Returns a composite matcher that comprises of this matcher logically ANDed with the specified matcher.
 	 * <p>
@@ -143,6 +131,22 @@ public class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 		}
 		
 		return matches;
+	}
+	
+	// ----------------------------------------------------------------------------------------------------------------
+	// package methods
+	// ----------------------------------------------------------------------------------------------------------------
+
+	static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
+	{
+		return compose(null, matcher);
+	}
+
+	static <T> ConjunctionMatcher<T> compose(String compositeDescription, Matcher<T> matcher)
+	{
+		requireNonNull(matcher, "matcher");
+		
+		return new ConjunctionMatcher<>(compositeDescription, singletonList(matcher));
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
