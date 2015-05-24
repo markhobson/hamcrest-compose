@@ -20,6 +20,7 @@ import org.hamcrest.StringDescription;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hobsoft.hamcrest.compose.HasFeatureMatcher.hasFeature;
 import static org.hobsoft.hamcrest.compose.TestMatchers.nothing;
@@ -76,7 +77,7 @@ public class HasFeatureMatcherTest
 	@Test
 	public void matchesWhenFeatureMatcherMatchesReturnsTrue()
 	{
-		Matcher<String> matcher = hasFeature("x", "y", String::length, is(1));
+		Matcher<String> matcher = hasFeature("x", "y", String::length, equalTo(1));
 		
 		assertThat(matcher.matches("z"), is(true));
 	}
@@ -84,7 +85,7 @@ public class HasFeatureMatcherTest
 	@Test
 	public void matchesWhenFeatureMatcherDoesNotMatchReturnsFalse()
 	{
-		Matcher<String> matcher = hasFeature("x", "y", String::length, is(2));
+		Matcher<String> matcher = hasFeature("x", "y", String::length, equalTo(2));
 		
 		assertThat(matcher.matches("z"), is(false));
 	}

@@ -84,7 +84,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("ham", hasFeature(String::length, is(3)));
+	 * assertThat("ham", hasFeature(String::length, equalTo(3)));
 	 * </pre>
 	 * 
 	 * @param featureFunction
@@ -108,7 +108,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("ham", hasFeature("string length", String::length, is(3)));
+	 * assertThat("ham", hasFeature("string length", String::length, equalTo(3)));
 	 * </pre>
 	 * 
 	 * @param featureName
@@ -134,7 +134,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("ham", hasFeature("a string with length", "string length", String::length, is(3)));
+	 * assertThat("ham", hasFeature("a string with length", "string length", String::length, equalTo(3)));
 	 * </pre>
 	 * 
 	 * @param featureDescription
