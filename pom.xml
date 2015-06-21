@@ -44,8 +44,8 @@
 		<connection>scm:git:git@github.com:markhobson/hamcrest-compose.git</connection>
 		<developerConnection>scm:git:git@github.com:markhobson/hamcrest-compose.git</developerConnection>
 		<url>https://github.com/markhobson/hamcrest-compose</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 	
 	<issueManagement>
 		<system>GitHub</system>
