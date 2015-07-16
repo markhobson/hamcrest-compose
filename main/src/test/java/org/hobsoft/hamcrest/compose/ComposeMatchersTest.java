@@ -53,7 +53,7 @@ public class ComposeMatchersTest
 	@Test(expected = NullPointerException.class)
 	public void composeWithNullMatcherThrowsException()
 	{
-		compose(null);
+		compose("x", null);
 	}
 	
 	@Test
