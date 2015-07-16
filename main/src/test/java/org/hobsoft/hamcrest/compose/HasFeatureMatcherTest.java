@@ -22,7 +22,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hobsoft.hamcrest.compose.HasFeatureMatcher.hasFeature;
+import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
 import static org.hobsoft.hamcrest.compose.TestMatchers.nothing;
 import static org.junit.Assert.assertThat;
 
@@ -35,12 +35,6 @@ public class HasFeatureMatcherTest
 	// tests
 	// ----------------------------------------------------------------------------------------------------------------
 
-	@Test(expected = NullPointerException.class)
-	public void hasFeatureWithNullFunctionThrowsException()
-	{
-		hasFeature("x", "y", null, anything());
-	}
-	
 	@Test
 	public void describeToDescribesMatcher()
 	{

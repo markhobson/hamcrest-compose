@@ -16,6 +16,7 @@ package org.hobsoft.hamcrest.compose;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -77,5 +78,11 @@ public class ComposeMatchersTest
 		Matcher<String> actual = hasFeature(String::length, equalTo(1));
 
 		assertThat(actual.matches("x"), is(true));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void hasFeatureWithNullFunctionThrowsException()
+	{
+		hasFeature("x", "y", null, anything());
 	}
 }
