@@ -38,6 +38,10 @@ This differs from Hamcrest's composite matchers [allOf](http://hamcrest.org/Java
 * It supports an optional description to help describe the composition
 * It does not repeat the matcher's description when describing a mismatch
 
+It can also be built from a list of matchers when a fluent style is inconvenient:
+
+	assertThat("ham", compose(asList(startsWith("h"), containsString("a"), endsWith("m"))));
+
 ### ComposeMatchers.hasFeature
 
 This factory method builds a matcher that matches a 'feature' of an object. A feature is any value that can be obtained from the object by a [Function](https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html). Typically this is a lambda such as a method reference, for example:

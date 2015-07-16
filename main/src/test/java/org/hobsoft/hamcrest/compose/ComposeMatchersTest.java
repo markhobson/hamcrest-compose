@@ -13,8 +13,12 @@
  */
 package org.hobsoft.hamcrest.compose;
 
+import java.util.List;
+
 import org.hamcrest.Matcher;
 import org.junit.Test;
+
+import static java.util.Arrays.asList;
 
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -35,7 +39,7 @@ public class ComposeMatchersTest
 	// ----------------------------------------------------------------------------------------------------------------
 
 	@Test
-	public void composeReturnsMatcher()
+	public void composeWithMatcherReturnsMatcher()
 	{
 		Matcher<String> actual = compose("x", startsWith("y")).and(endsWith("z"));
 		
@@ -43,7 +47,7 @@ public class ComposeMatchersTest
 	}
 	
 	@Test
-	public void composeWithoutDescriptionReturnsMatcher()
+	public void composeWithMatcherWithoutDescriptionReturnsMatcher()
 	{
 		Matcher<String> actual = compose(startsWith("x")).and(endsWith("y"));
 		
@@ -53,7 +57,29 @@ public class ComposeMatchersTest
 	@Test(expected = NullPointerException.class)
 	public void composeWithNullMatcherThrowsException()
 	{
-		compose("x", null);
+		compose("x", (Matcher<Object>) null);
+	}
+	
+	@Test
+	public void composeWithMatchersReturnsMatcher()
+	{
+		Matcher<String> actual = compose("x", asList(startsWith("y"), endsWith("z")));
+		
+		assertThat(actual.matches("yz"), is(true));
+	}
+	
+	@Test
+	public void composeWithMatchersWithoutDescriptionReturnsMatcher()
+	{
+		Matcher<String> actual = compose(asList(startsWith("y"), endsWith("z")));
+		
+		assertThat(actual.matches("yz"), is(true));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void composeWithNullMatchersThrowsException()
+	{
+		compose("x", (List<Matcher<Object>>) null);
 	}
 	
 	@Test

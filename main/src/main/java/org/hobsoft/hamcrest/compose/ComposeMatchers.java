@@ -13,6 +13,7 @@
  */
 package org.hobsoft.hamcrest.compose;
 
+import java.util.List;
 import java.util.function.Function;
 
 import org.hamcrest.Matcher;
@@ -81,7 +82,53 @@ public final class ComposeMatchers
 	{
 		requireNonNull(matcher, "matcher");
 		
-		return new ConjunctionMatcher<>(compositeDescription, singletonList(matcher));
+		return compose(compositeDescription, singletonList(matcher));
+	}
+
+	/**
+	 * Returns a matcher that logically ANDs the specified matchers with any number of further matchers.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("ham", compose(asList(startsWith("h"), containsString("a"))).and(endsWith("m")));
+	 * </pre>
+	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
+	 * 
+	 * @param matchers
+	 *            the initial matchers to compose
+	 * @param <T>
+	 *            the type of the object to be matched
+	 * @return a matcher that can compose itself with further matchers
+	 * @see ConjunctionMatcher
+	 */
+	public static <T> ConjunctionMatcher<T> compose(List<Matcher<T>> matchers)
+	{
+		return compose(null, matchers);
+	}
+	
+	/**
+	 * Returns a matcher that logically ANDs the specified matchers with any number of further matchers.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("ham", compose("a word with", asList(startsWith("h"), containsString("a"))).and(endsWith("m")));
+	 * </pre>
+	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
+	 * 
+	 * @param compositeDescription
+	 *            a description of this composite used by {@code describeTo}
+	 * @param matchers
+	 *            the initial matchers to compose
+	 * @param <T>
+	 *            the type of the object to be matched
+	 * @return a matcher that can compose itself with further matchers
+	 * @see ConjunctionMatcher
+	 */
+	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, List<Matcher<T>> matchers)
+	{
+		requireNonNull(matchers, "matchers");
+		
+		return new ConjunctionMatcher<>(compositeDescription, matchers);
 	}
 
 	/**
