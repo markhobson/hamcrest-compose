@@ -17,6 +17,9 @@ import java.util.function.Function;
 
 import org.hamcrest.Matcher;
 
+import static java.util.Collections.singletonList;
+import static java.util.Objects.requireNonNull;
+
 /**
  * Factory for Hamcrest Compose matchers.
  */
@@ -53,7 +56,7 @@ public final class ComposeMatchers
 	 */
 	public static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
 	{
-		return ConjunctionMatcher.compose(matcher);
+		return compose(null, matcher);
 	}
 	
 	/**
@@ -76,7 +79,9 @@ public final class ComposeMatchers
 	 */
 	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Matcher<T> matcher)
 	{
-		return ConjunctionMatcher.compose(compositeDescription, matcher);
+		requireNonNull(matcher, "matcher");
+		
+		return new ConjunctionMatcher<>(compositeDescription, singletonList(matcher));
 	}
 
 	/**

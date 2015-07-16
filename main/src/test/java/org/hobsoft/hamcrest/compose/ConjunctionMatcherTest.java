@@ -21,7 +21,7 @@ import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.StringDescription.asString;
-import static org.hobsoft.hamcrest.compose.ConjunctionMatcher.compose;
+import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
 import static org.hobsoft.hamcrest.compose.TestMatchers.nothing;
 import static org.junit.Assert.assertThat;
 
@@ -33,12 +33,6 @@ public class ConjunctionMatcherTest
 	// ----------------------------------------------------------------------------------------------------------------
 	// tests
 	// ----------------------------------------------------------------------------------------------------------------
-	
-	@Test(expected = NullPointerException.class)
-	public void composeWithNullMatcherThrowsException()
-	{
-		compose(null);
-	}
 	
 	@Test
 	public void andReturnsCompositeMatcher()
