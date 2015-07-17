@@ -13,6 +13,7 @@
  */
 package org.hobsoft.hamcrest.compose;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matcher;
@@ -89,6 +90,18 @@ public class ComposeMatchersTest
 	public void composeWithNullMatchersThrowsException()
 	{
 		compose("x", (List<Matcher<Object>>) null);
+	}
+	
+	@Test
+	public void composeWithMatchersClonesList()
+	{
+		List<Matcher<String>> matchers = new ArrayList<>();
+		matchers.add(startsWith("y"));
+		
+		Matcher<String> actual = compose("x", matchers);
+		matchers.add(endsWith("z"));
+		
+		assertThat(actual.matches("y"), is(true));
 	}
 	
 	@Test
