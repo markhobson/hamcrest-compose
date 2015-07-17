@@ -16,6 +16,8 @@ package org.hobsoft.hamcrest.compose;
 import org.hamcrest.StringDescription;
 import org.junit.Test;
 
+import static java.util.Collections.emptyList;
+
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
@@ -83,6 +85,16 @@ public class ConjunctionMatcherTest
 	}
 	
 	@Test
+	public void describeToWhenEmptyMatchersOmitsMatchers()
+	{
+		StringDescription description = new StringDescription();
+		
+		compose("x", emptyList()).describeTo(description);
+		
+		assertThat(description.toString(), is("x"));
+	}
+	
+	@Test
 	public void describeToWhenNoDescriptionOmitsPrefix()
 	{
 		StringDescription description = new StringDescription();
@@ -90,6 +102,16 @@ public class ConjunctionMatcherTest
 		compose(anything("x")).describeTo(description);
 		
 		assertThat(description.toString(), is("x"));
+	}
+	
+	@Test
+	public void describeToWhenNoDescriptionAndEmptyMatchersDescribesAnything()
+	{
+		StringDescription description = new StringDescription();
+		
+		compose(emptyList()).describeTo(description);
+		
+		assertThat(description.toString(), is("anything"));
 	}
 	
 	@Test

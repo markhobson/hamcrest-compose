@@ -19,6 +19,7 @@ import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -74,6 +75,14 @@ public class ComposeMatchersTest
 		Matcher<String> actual = compose(asList(startsWith("y"), endsWith("z")));
 		
 		assertThat(actual.matches("yz"), is(true));
+	}
+	
+	@Test
+	public void composeWithEmptyMatchersReturnsMatcher()
+	{
+		Matcher<String> actual = compose("x", emptyList());
+		
+		assertThat(actual.matches("y"), is(true));
 	}
 	
 	@Test(expected = NullPointerException.class)

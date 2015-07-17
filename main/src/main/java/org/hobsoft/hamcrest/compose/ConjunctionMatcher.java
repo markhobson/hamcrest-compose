@@ -64,11 +64,6 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	{
 		requireNonNull(matchers, "matchers");
 		
-		if (matchers.isEmpty())
-		{
-			throw new IllegalArgumentException("matchers cannot be empty");
-		}
-		
 		this.compositeDescription = compositeDescription;
 		this.matchers = unmodifiableList(new ArrayList<>(matchers));
 	}
@@ -100,9 +95,16 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	@Override
 	public void describeTo(Description description)
 	{
-		String start = (compositeDescription != null) ? compositeDescription + " " : "";
+		if (matchers.isEmpty())
+		{
+			description.appendText(compositeDescription != null ? compositeDescription : "anything");
+		}
+		else
+		{
+			String start = (compositeDescription != null) ? compositeDescription + " " : "";
 		
-		description.appendList(start, SEPARATOR, "", matchers);
+			description.appendList(start, SEPARATOR, "", matchers);
+		}
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
