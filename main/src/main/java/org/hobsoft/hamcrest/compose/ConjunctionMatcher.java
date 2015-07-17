@@ -138,9 +138,9 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static <T> List<T> concat(List<T> list, T element)
+	private static <E> List<E> concat(List<E> list, E element)
 	{
-		List<T> newList = new ArrayList<>(list);
+		List<E> newList = new ArrayList<>(list);
 		newList.add(element);
 		return newList;
 	}
