@@ -13,7 +13,6 @@
  */
 package org.hobsoft.hamcrest.compose;
 
-import java.util.List;
 import java.util.function.Function;
 
 import org.hamcrest.Matcher;
@@ -101,7 +100,7 @@ public final class ComposeMatchers
 	 * @return a matcher that can compose itself with further matchers
 	 * @see ConjunctionMatcher
 	 */
-	public static <T> ConjunctionMatcher<T> compose(List<Matcher<T>> matchers)
+	public static <T> ConjunctionMatcher<T> compose(Iterable<Matcher<T>> matchers)
 	{
 		return compose(null, matchers);
 	}
@@ -124,7 +123,7 @@ public final class ComposeMatchers
 	 * @return a matcher that can compose itself with further matchers
 	 * @see ConjunctionMatcher
 	 */
-	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, List<Matcher<T>> matchers)
+	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Iterable<Matcher<T>> matchers)
 	{
 		requireNonNull(matchers, "matchers");
 		

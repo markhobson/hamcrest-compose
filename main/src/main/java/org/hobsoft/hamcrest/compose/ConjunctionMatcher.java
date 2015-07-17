@@ -60,12 +60,12 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	ConjunctionMatcher(String compositeDescription, List<Matcher<T>> matchers)
+	ConjunctionMatcher(String compositeDescription, Iterable<Matcher<T>> matchers)
 	{
 		requireNonNull(matchers, "matchers");
 		
 		this.compositeDescription = compositeDescription;
-		this.matchers = unmodifiableList(new ArrayList<>(matchers));
+		this.matchers = unmodifiableList(toList(matchers));
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -137,6 +137,13 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// ----------------------------------------------------------------------------------------------------------------
 	// private methods
 	// ----------------------------------------------------------------------------------------------------------------
+
+	private static <E> List<E> toList(Iterable<E> iterable)
+	{
+		List<E> list = new ArrayList<>();
+		iterable.forEach(list::add);
+		return list;
+	}
 
 	private static <E> List<E> concat(List<E> list, E element)
 	{
