@@ -23,7 +23,7 @@ Hamcrest Compose is available in the [Maven Central repository](http://search.ma
 
 ## Usage
 
-Hamcrest Compose provides two matchers:
+Hamcrest Compose provides the following matchers:
 
 ### ComposeMatchers.compose
 
@@ -55,6 +55,14 @@ By default this matcher will describe itself and any mismatches by using the `to
 This feature description is also used to describe any mismatches. To specify a feature name for the mismatch only:
 
 	assertThat(person, hasFeature("a person with first name", "first name", Person::getFirstName, equalTo("ham")));
+
+### ComposeMatchers.hasFeatureValue
+
+This factory method builds a matcher that matches a feature value of an object. For example:
+
+	assertThat(person, hasFeatureValue(Person::getFirstName, "ham"));
+
+It is a convenience method for `hasFeature` with an [equalTo](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/CoreMatchers.html#equalTo(T)) matcher.
 
 ## Links
 

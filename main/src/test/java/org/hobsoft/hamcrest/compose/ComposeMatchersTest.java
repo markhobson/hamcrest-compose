@@ -29,6 +29,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
+import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeatureValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -132,5 +133,35 @@ public class ComposeMatchersTest
 	public void hasFeatureWithNullFunctionThrowsException()
 	{
 		hasFeature("x", "y", null, anything());
+	}
+	
+	@Test
+	public void hasFeatureValueReturnsMatcher()
+	{
+		Matcher<String> actual = hasFeatureValue("x", "y", String::length, 1);
+		
+		assertThat(actual.matches("z"), is(true));
+	}
+	
+	@Test
+	public void hasFeatureValueWithoutDescriptionReturnsMatcher()
+	{
+		Matcher<String> actual = hasFeatureValue("x", String::length, 1);
+		
+		assertThat(actual.matches("y"), is(true));
+	}
+	
+	@Test
+	public void hasFeatureValueWithoutNameReturnsMatcher()
+	{
+		Matcher<String> actual = hasFeatureValue(String::length, 1);
+		
+		assertThat(actual.matches("x"), is(true));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void hasFeatureValueWithNullFunctionThrowsException()
+	{
+		hasFeatureValue("x", "y", null, anything());
 	}
 }
