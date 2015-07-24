@@ -64,6 +64,20 @@ This factory method builds a matcher that matches a feature value of an object. 
 
 It is a convenience method for `hasFeature` with an [equalTo](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/CoreMatchers.html#equalTo(T)) matcher.
 
+## Using with Mockito
+
+When using [Mockito](http://mockito.org/) the `hasFeature` matcher can provide an alternative to [ArgumentCaptor](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#15). Consider their example:
+
+    ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
+    verify(mock).doSomething(argument.capture());
+    assertEquals("John", argument.getValue().getName());
+    
+We can replace `ArgumentCaptor` with a [custom argument matcher](http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html) that uses `hasFeature`:
+
+    verify(mock).doSomething(argThat(hasFeature(Person::getName, equalTo("John"))));
+
+The downside to this approach is that Mockito does not use the matcher to describe any mismatches. Instead it simply writes the actual argument using `toString` which makes diagnosing the mismatch harder.
+
 ## Links
 
 * [Javadoc](http://www.hobsoft.org/hamcrest-compose/hamcrest-compose/apidocs/)
