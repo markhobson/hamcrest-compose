@@ -24,6 +24,7 @@ Hamcrest Compose is available in the [Maven Central repository](http://search.ma
 		<scope>test</scope>
 	</dependency>
 ```
+
 ## Usage
 
 Hamcrest Compose provides the following matchers:
