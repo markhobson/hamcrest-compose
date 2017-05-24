@@ -43,7 +43,7 @@ public class ConjunctionMatcherTest
 		
 		ConjunctionMatcher<Object> actual = matcher.and(anything("z"));
 		
-		assertThat(asString(actual), is("x y and z"));
+		assertThat(asString(actual), is("x y\n and z"));
 	}
 	
 	@Test
@@ -73,7 +73,43 @@ public class ConjunctionMatcherTest
 		
 		assertThat(description.toString(), is("x y"));
 	}
-	
+
+	@Test
+	public void describeContainsNoIndentationForChainedCompose() {
+		StringDescription description = new StringDescription();
+
+		compose("x",
+				compose("y", anything("z")))
+				.describeTo(description);
+
+		assertThat(description.toString(), is("x y z"));
+	}
+
+	@Test
+	public void describeContainsIndentationForAndCompose() {
+		StringDescription description = new StringDescription();
+
+		compose("x", anything("x"))
+				.and(compose("y", anything("y")))
+				.describeTo(description);
+
+		assertThat(description.toString(), is("x x\n\t and y y"));
+	}
+
+	@Test
+	public void describeContainsIndentationForNestedAndCompose() {
+		StringDescription description = new StringDescription();
+
+		compose("w", anything("w"))
+				.and(compose("x", anything("x")))
+				.and(compose("y", anything("y"))
+					.and(compose("z", anything("z"))))
+				.and(compose("a", anything("a")))
+				.describeTo(description);
+
+		assertThat(description.toString(), is("w w\n\t and x x\n\t and y y\n\t\t and z z\n\t and a a"));
+	}
+
 	@Test
 	public void describeToWhenMatchersDescribesMatchers()
 	{
@@ -81,7 +117,7 @@ public class ConjunctionMatcherTest
 		
 		compose("x", anything("y")).and(anything("z")).describeTo(description);
 		
-		assertThat(description.toString(), is("x y and z"));
+		assertThat(description.toString(), is("x y\n and z"));
 	}
 	
 	@Test
@@ -176,6 +212,6 @@ public class ConjunctionMatcherTest
 		
 		matcher.describeMismatch("z", description);
 		
-		assertThat(description.toString(), is("x was \"z\" and y was \"z\""));
+		assertThat(description.toString(), is("x was \"z\"\n and y was \"z\""));
 	}
 }
