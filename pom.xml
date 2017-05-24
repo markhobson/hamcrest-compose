@@ -67,6 +67,15 @@
 			</roles>
 			<timezone>0</timezone>
 		</developer>
+
+		<developer>
+			<id>Nava2</id>
+			<name>Kevin Brightwell</name>
+			<roles>
+				<role>Contributor</role>
+			</roles>
+			<timezone>-4</timezone>
+		</developer>
 	</developers>
 	
 	<build>
