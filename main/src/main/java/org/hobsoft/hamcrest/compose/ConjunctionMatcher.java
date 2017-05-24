@@ -89,7 +89,7 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 				}
 				return m;
 			})
-			.collect(Collectors.toList()); // intentional reference copy
+			.collect(Collectors.toList());
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------
@@ -149,9 +149,11 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 			description.appendText(start);
 
 			boolean first = true;
-			for (Matcher<T> matcher: matchers) {
+			for (Matcher<T> matcher: matchers)
+			{
 
-				if (!first) {
+				if (!first)
+				{
 					describeSeparatorForMatcher(description, matcher);
 				}
 
@@ -166,9 +168,11 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	 * @param description Description appended to
 	 * @param matcher matcher being described
 	 */
-	private void describeSeparatorForMatcher(final Description description, final Matcher<T> matcher) {
+	private void describeSeparatorForMatcher(final Description description, final Matcher<T> matcher)
+	{
 		description.appendText("\n");
-		if (matcher instanceof ConjunctionMatcher) {
+		if (matcher instanceof ConjunctionMatcher)
+		{
 			((ConjunctionMatcher<T>) matcher).describeIndentation(description);
 		}
 
