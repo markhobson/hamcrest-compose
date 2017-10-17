@@ -43,7 +43,8 @@ public class ConjunctionMatcherTest
 		
 		ConjunctionMatcher<Object> actual = matcher.and(anything("z"));
 		
-		assertThat(asString(actual), is("x y and z"));
+		assertThat(asString(actual), is("x y\n"
+			+ "          and z"));
 	}
 	
 	@Test
@@ -81,7 +82,8 @@ public class ConjunctionMatcherTest
 		
 		compose("x", anything("y")).and(anything("z")).describeTo(description);
 		
-		assertThat(description.toString(), is("x y and z"));
+		assertThat(description.toString(), is("x y\n"
+			+ "          and z"));
 	}
 	
 	@Test
@@ -176,6 +178,7 @@ public class ConjunctionMatcherTest
 		
 		matcher.describeMismatch("z", description);
 		
-		assertThat(description.toString(), is("x was \"z\" and y was \"z\""));
+		assertThat(description.toString(), is("x was \"z\"\n"
+			+ "          and y was \"z\""));
 	}
 }
