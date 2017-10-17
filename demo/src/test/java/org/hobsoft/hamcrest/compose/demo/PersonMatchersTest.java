@@ -37,7 +37,9 @@ public class PersonMatchersTest
 		
 		personEqualTo(person).describeTo(description);
 		
-		assertThat(description.toString(), is("a person with title \"x\" and first name \"y\" and last name \"z\""));
+		assertThat(description.toString(), is("a person with title \"x\"\n"
+			+ "          and first name \"y\"\n"
+			+ "          and last name \"z\""));
 	}
 	
 	@Test
@@ -121,6 +123,8 @@ public class PersonMatchersTest
 		
 		personEqualTo(person1).describeMismatch(person2, description);
 		
-		assertThat(description.toString(), is("title was \"x2\" and first name was \"y2\" and last name was \"z2\""));
+		assertThat(description.toString(), is("title was \"x2\"\n"
+			+ "          and first name was \"y2\"\n"
+			+ "          and last name was \"z2\""));
 	}
 }

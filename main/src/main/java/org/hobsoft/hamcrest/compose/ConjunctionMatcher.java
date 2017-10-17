@@ -30,6 +30,7 @@ import static java.util.Objects.requireNonNull;
  * <ul>
  * <li>It does not short circuit. This means that all mismatches are reported, not just the first one.
  * <li>It does not describe itself using parenthesis. This produces more readable descriptions.
+ * <li>It describes each matcher on a separate line
  * <li>It supports an optional description to help describe the composition
  * <li>It does not repeat the matcher's description when describing a mismatch
  * </ul>
@@ -46,7 +47,8 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	// constants
 	// ----------------------------------------------------------------------------------------------------------------
 
-	private static final String SEPARATOR = " and ";
+	//                                         Expected: <description>
+	private static final String SEPARATOR = "\n          and ";
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
