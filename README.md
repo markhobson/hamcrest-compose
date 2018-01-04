@@ -45,10 +45,11 @@ This differs from Hamcrest's composite matchers [allOf](http://hamcrest.org/Java
 * It supports an optional description to help describe the composition
 * It does not repeat the matcher's description when describing a mismatch
 
-It can also be built from a list of matchers when a fluent style is inconvenient:
+It can also be built from a list or an array of matchers when a fluent style is inconvenient:
 
 ```java
 assertThat("ham", compose(asList(startsWith("h"), containsString("a"), endsWith("m"))));
+assertThat("ham", compose(startsWith("h"), containsString("a"), endsWith("m")));
 ```
 
 ### ComposeMatchers.hasFeature
