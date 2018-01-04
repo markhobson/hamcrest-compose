@@ -47,12 +47,8 @@ public final class ComposeMatchers
 	 * <pre>
 	 * assertThat("ham", compose(startsWith("h")).and(containsString("a")).and(endsWith("m")));
 	 * </pre>
-	 * or:
-	 * <pre>
-	 * assertThat("ham", compose(startsWith("h"), containsString("a"), endsWith("m"));
-	 * </pre>
 	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
-	 *
+	 * 
 	 * @param matchers
 	 *            the initial matchers to compose
 	 * @param <T>
@@ -72,10 +68,6 @@ public final class ComposeMatchers
 	 * For example:
 	 * <pre>
 	 * assertThat("ham", compose("a word with", startsWith("h")).and(containsString("a")).and(endsWith("m")));
-	 * </pre>
-	 * or:
-	 * <pre>
-	 * assertThat("ham", compose("a word with", startsWith("h"), containsString("a"), endsWith("m"));
 	 * </pre>
 	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
 	 * 

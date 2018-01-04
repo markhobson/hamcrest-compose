@@ -14,7 +14,6 @@
 package org.hobsoft.hamcrest.compose;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hamcrest.Description;
@@ -66,12 +65,7 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	ConjunctionMatcher(String compositeDescription, Iterable<Matcher<T>> matchers)
 	{
 		requireNonNull(matchers, "matchers");
-		
-		Iterator<?> iterator = matchers.iterator();
-		for (int i = 0; iterator.hasNext(); i++)
-		{
-			requireNonNull(iterator.next(), "matcher[" + i + "]");
-		}
+		matchers.forEach(matcher -> requireNonNull(matcher, "matcher"));
 		
 		this.compositeDescription = compositeDescription;
 		this.matchers = unmodifiableList(toList(matchers));

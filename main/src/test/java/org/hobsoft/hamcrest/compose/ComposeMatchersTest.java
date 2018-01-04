@@ -14,7 +14,6 @@
 package org.hobsoft.hamcrest.compose;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.hamcrest.Matcher;
@@ -59,15 +58,37 @@ public class ComposeMatchersTest
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void composeWithVarArgsThatHasNullMatcherInMiddleThrowsException()
-	{
-		compose("x", startsWith("x"), null);
-	}
-	
-	@Test(expected = NullPointerException.class)
 	public void composeWithNullMatcherThrowsException()
 	{
 		compose("x", (Matcher<Object>) null);
+	}
+	
+	@Test
+	public void composeWithMatcherArrayReturnsMatcher()
+	{
+		Matcher<String> actual = compose("x", startsWith("y"), endsWith("z"));
+		
+		assertThat(actual.matches("yz"), is(true));
+	}
+	
+	@Test
+	public void composeWithMatcherArrayWithoutDescriptionReturnsMatcher()
+	{
+		Matcher<String> actual = compose(startsWith("x"), endsWith("y"));
+		
+		assertThat(actual.matches("xy"), is(true));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void composeWithNullMatcherArrayThrowsException()
+	{
+		compose("x", (Matcher<Object>[]) null);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void composeWithMatcherArrayContainingNullThrowsException()
+	{
+		compose("x", startsWith("y"), null, endsWith("z"));
 	}
 	
 	@Test
@@ -79,7 +100,7 @@ public class ComposeMatchersTest
 	}
 	
 	@Test
-	public void composeWithMatchersReturnsMatcher()
+	public void composeWithMatcherListReturnsMatcher()
 	{
 		Matcher<String> actual = compose("x", asList(startsWith("y"), endsWith("z")));
 		
@@ -87,7 +108,7 @@ public class ComposeMatchersTest
 	}
 	
 	@Test
-	public void composeWithMatchersWithoutDescriptionReturnsMatcher()
+	public void composeWithMatcherListWithoutDescriptionReturnsMatcher()
 	{
 		Matcher<String> actual = compose(asList(startsWith("y"), endsWith("z")));
 		
@@ -95,7 +116,7 @@ public class ComposeMatchersTest
 	}
 	
 	@Test
-	public void composeWithEmptyMatchersReturnsMatcher()
+	public void composeWithEmptyMatcherListReturnsMatcher()
 	{
 		Matcher<String> actual = compose("x", emptyList());
 		
@@ -103,15 +124,15 @@ public class ComposeMatchersTest
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void composeWithIterableThatHasNullMatcherOnMiddleThrowsException()
+	public void composeWithNullMatcherListThrowsException()
 	{
-		compose("x", Arrays.asList(startsWith("x"), null));
+		compose("x", (List<Matcher<Object>>) null);
 	}
 	
 	@Test(expected = NullPointerException.class)
-	public void composeWithNullMatchersThrowsException()
+	public void composeWithMatcherListContainingNullThrowsException()
 	{
-		compose("x", (List<Matcher<Object>>) null);
+		compose("x", asList(startsWith("y"), null, endsWith("z")));
 	}
 	
 	@Test
