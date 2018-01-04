@@ -76,6 +76,7 @@ public final class ComposeMatchers
 	 * or:
 	 * <pre>
 	 * assertThat("ham", compose("a word with", startsWith("h"), containsString("a"), endsWith("m"));
+	 * </pre>
 	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
 	 * 
 	 * @param compositeDescription
