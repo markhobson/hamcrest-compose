@@ -14,6 +14,7 @@
 package org.hobsoft.hamcrest.compose;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.hamcrest.Matcher;
@@ -58,9 +59,23 @@ public class ComposeMatchersTest
 	}
 	
 	@Test(expected = NullPointerException.class)
+	public void composeWithVarArgsThatHasNullMatcherInMiddleThrowsException()
+	{
+		compose("x", startsWith("x"), null);
+	}
+	
+	@Test(expected = NullPointerException.class)
 	public void composeWithNullMatcherThrowsException()
 	{
 		compose("x", (Matcher<Object>) null);
+	}
+	
+	@Test
+	public void composeWithNoMatcherReturnsMatcher()
+	{
+		Matcher<?> matcher = compose("x");
+		
+		assertThat(matcher.matches("y"), is(true));
 	}
 	
 	@Test
@@ -85,6 +100,12 @@ public class ComposeMatchersTest
 		Matcher<String> actual = compose("x", emptyList());
 		
 		assertThat(actual.matches("y"), is(true));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void composeWithIterableThatHasNullMatcherOnMiddleThrowsException()
+	{
+		compose("x", Arrays.asList(startsWith("x"), null));
 	}
 	
 	@Test(expected = NullPointerException.class)

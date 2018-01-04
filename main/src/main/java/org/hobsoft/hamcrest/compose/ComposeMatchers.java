@@ -17,7 +17,7 @@ import java.util.function.Function;
 
 import org.hamcrest.Matcher;
 
-import static java.util.Collections.singletonList;
+import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -41,49 +41,58 @@ public final class ComposeMatchers
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * Returns a matcher that logically ANDs the specified matcher with any number of further matchers.
+	 * Returns a matcher that logically ANDs the specified matchers with any number of further matchers.
 	 * <p>
 	 * For example:
 	 * <pre>
 	 * assertThat("ham", compose(startsWith("h")).and(containsString("a")).and(endsWith("m")));
 	 * </pre>
+	 * or:
+	 * <pre>
+	 * assertThat("ham", compose(startsWith("h"), containsString("a"), endsWith("m"));
+	 * </pre>
 	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
-	 * 
-	 * @param matcher
-	 *            the first matcher to compose
+	 *
+	 * @param matchers
+	 *            the initial matchers to compose
 	 * @param <T>
 	 *            the type of the object to be matched
 	 * @return a matcher that can compose itself with further matchers
 	 * @see ConjunctionMatcher
 	 */
-	public static <T> ConjunctionMatcher<T> compose(Matcher<T> matcher)
+	@SafeVarargs
+	public static <T> ConjunctionMatcher<T> compose(Matcher<T>... matchers)
 	{
-		return compose(null, matcher);
+		return compose(null, matchers);
 	}
 	
 	/**
-	 * Returns a matcher that logically ANDs the specified matcher with any number of further matchers.
+	 * Returns a matcher that logically ANDs the specified matchers with any number of further matchers.
 	 * <p>
 	 * For example:
 	 * <pre>
 	 * assertThat("ham", compose("a word with", startsWith("h")).and(containsString("a")).and(endsWith("m")));
 	 * </pre>
+	 * or:
+	 * <pre>
+	 * assertThat("ham", compose("a word with", startsWith("h"), containsString("a"), endsWith("m"));
 	 * See {@code ConjunctionMatcher} as to how this matcher differs from {@code allOf} and {@code both}.
 	 * 
 	 * @param compositeDescription
 	 *            a description of this composite used by {@code describeTo}
-	 * @param matcher
-	 *            the first matcher to compose
+	 * @param matchers
+	 *            the initial matchers to compose
 	 * @param <T>
 	 *            the type of the object to be matched
 	 * @return a matcher that can compose itself with further matchers
 	 * @see ConjunctionMatcher
 	 */
-	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Matcher<T> matcher)
+	@SafeVarargs
+	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Matcher<T>... matchers)
 	{
-		requireNonNull(matcher, "matcher");
+		requireNonNull(matchers, "matchers");
 		
-		return compose(compositeDescription, singletonList(matcher));
+		return compose(compositeDescription, asList(matchers));
 	}
 
 	/**

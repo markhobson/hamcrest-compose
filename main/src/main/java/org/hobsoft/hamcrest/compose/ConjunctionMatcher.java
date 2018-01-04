@@ -14,6 +14,7 @@
 package org.hobsoft.hamcrest.compose;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hamcrest.Description;
@@ -39,7 +40,7 @@ import static java.util.Objects.requireNonNull;
  * 
  * @param <T>
  *            the type of the object to be matched
- * @see ComposeMatchers#compose(Matcher)
+ * @see ComposeMatchers#compose(Matcher...)
  */
 public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 {
@@ -65,6 +66,12 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	ConjunctionMatcher(String compositeDescription, Iterable<Matcher<T>> matchers)
 	{
 		requireNonNull(matchers, "matchers");
+		
+		Iterator<?> iterator = matchers.iterator();
+		for (int i = 0; iterator.hasNext(); i++)
+		{
+			requireNonNull(iterator.next(), "matcher[" + i + "]");
+		}
 		
 		this.compositeDescription = compositeDescription;
 		this.matchers = unmodifiableList(toList(matchers));
