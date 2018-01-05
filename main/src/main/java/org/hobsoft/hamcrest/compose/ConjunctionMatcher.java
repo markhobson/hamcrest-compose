@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
@@ -41,7 +40,7 @@ import static java.util.Objects.requireNonNull;
  *            the type of the object to be matched
  * @see ComposeMatchers#compose(Matcher...)
  */
-public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
+public final class ConjunctionMatcher<T> extends TypeAndNullSafeDiagnosingMatcher<T>
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// constants

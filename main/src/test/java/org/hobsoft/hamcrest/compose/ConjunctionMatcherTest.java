@@ -21,6 +21,8 @@ import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.StringDescription.asString;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
@@ -146,6 +148,22 @@ public class ConjunctionMatcherTest
 		ConjunctionMatcher<String> matcher = compose(startsWith("x")).and(endsWith("y"));
 		
 		assertThat(matcher.matches("z"), is(false));
+	}
+	
+	@Test
+	public void matchesWhenNullIsPassedPropagatesToMatcher()
+	{
+		ConjunctionMatcher<?> matcher = compose(is(nullValue()));
+		
+		assertThat(matcher.matches(null), is(true));
+	}
+	
+	@Test
+	public void matchesWhenNullIsPassedDontThrowNullPointerException()
+	{
+		ConjunctionMatcher<String> matcher = compose(is(notNullValue(String.class)));
+		
+		assertThat(matcher.matches(null), is(false));
 	}
 	
 	@Test
