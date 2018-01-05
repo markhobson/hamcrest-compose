@@ -1,8 +1,20 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.hobsoft.hamcrest.compose;
 
 import org.hamcrest.Description;
 import org.hamcrest.DiagnosingMatcher;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.internal.ReflectiveTypeFinder;
 
 /**
@@ -18,8 +30,8 @@ public abstract class TypeAndNullSafeDiagnosingMatcher<T> extends DiagnosingMatc
 	// constants
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	private static final ReflectiveTypeFinder TYPE_FINDER = 
-			new ReflectiveTypeFinder("matchesSafely", 2, 0);
+	private static final ReflectiveTypeFinder TYPE_FINDER =
+		new ReflectiveTypeFinder("matchesSafely", 2, 0);
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// fields
@@ -32,7 +44,7 @@ public abstract class TypeAndNullSafeDiagnosingMatcher<T> extends DiagnosingMatc
 	// ----------------------------------------------------------------------------------------------------------------
 	
 	/**
-	 * @see TypeSafeDiagnosingMatcher#TypeSafeDiagnosingMatcher().
+	 * @see org.hamcrest.TypeSafeDiagnosingMatcher#TypeSafeDiagnosingMatcher().
 	 */
 	protected TypeAndNullSafeDiagnosingMatcher()
 	{
@@ -44,7 +56,8 @@ public abstract class TypeAndNullSafeDiagnosingMatcher<T> extends DiagnosingMatc
 	// ----------------------------------------------------------------------------------------------------------------
 	
 	/**
-	 * Similar to {@link TypeSafeDiagnosingMatcher#matchesSafely(Object, Description)}, but propagates null values too.
+	 * Similar to {@link org.hamcrest.TypeSafeDiagnosingMatcher#matchesSafely(Object, Description)}, but propagates 
+	 * null values too.
 	 */
 	protected abstract boolean matchesSafely(T item, Description mismatchDescription);
 	
@@ -63,10 +76,16 @@ public abstract class TypeAndNullSafeDiagnosingMatcher<T> extends DiagnosingMatc
 	 *            If the given item matches.
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public boolean matches(Object item, Description mismatchDescription) 
+	public boolean matches(Object item, Description mismatchDescription)
 	{
-		return (item == null || expectedType.isInstance(item)) 
-			&& matchesSafely((T) item, mismatchDescription);
+		if (item != null && !expectedType.isInstance(item))
+		{
+			return false;
+		}
+		
+		@SuppressWarnings("unchecked")
+		T castItem = (T) item;
+		
+		return matchesSafely(castItem, mismatchDescription);
 	}
 }
