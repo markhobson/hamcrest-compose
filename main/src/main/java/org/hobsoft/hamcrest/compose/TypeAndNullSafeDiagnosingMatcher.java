@@ -55,8 +55,12 @@ public abstract class TypeAndNullSafeDiagnosingMatcher<T> extends DiagnosingMatc
 	/**
 	 * Receives an item and check for match if it is null or an instance of the desired class.
 	 *
-	 * @param item Object to be verified.
-	 * @return If the given item matches.
+	 * @param item 
+	 *            Object to be verified.
+	 * @param mismatchDescription
+	 *            Description for the mismatches to be appended into.
+	 * @return 
+	 *            If the given item matches.
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
