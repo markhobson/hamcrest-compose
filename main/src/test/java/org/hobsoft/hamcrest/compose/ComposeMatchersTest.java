@@ -126,7 +126,7 @@ public class ComposeMatchersTest
 	@Test(expected = NullPointerException.class)
 	public void composeWithNullMatcherListThrowsException()
 	{
-		compose("x", (List<Matcher<Object>>) null);
+		compose("x", (List<Matcher<? super Object>>) null);
 	}
 	
 	@Test(expected = NullPointerException.class)
@@ -138,11 +138,22 @@ public class ComposeMatchersTest
 	@Test
 	public void composeWithMatchersClonesList()
 	{
-		List<Matcher<String>> matchers = new ArrayList<>();
+		List<Matcher<? super String>> matchers = new ArrayList<>();
 		matchers.add(startsWith("y"));
 		
 		Matcher<String> actual = compose("x", matchers);
 		matchers.add(endsWith("z"));
+		
+		assertThat(actual.matches("y"), is(true));
+	}
+	
+	@Test
+	public void composeWithSupertypeMatcherListReturnsMatcher()
+	{
+		List<Matcher<? super String>> matchers = new ArrayList<>();
+		matchers.add(anything());
+		
+		Matcher<String> actual = compose("x", matchers);
 		
 		assertThat(actual.matches("y"), is(true));
 	}

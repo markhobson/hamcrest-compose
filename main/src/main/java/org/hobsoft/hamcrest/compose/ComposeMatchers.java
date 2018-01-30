@@ -57,7 +57,7 @@ public final class ComposeMatchers
 	 * @see ConjunctionMatcher
 	 */
 	@SafeVarargs
-	public static <T> ConjunctionMatcher<T> compose(Matcher<T>... matchers)
+	public static <T> ConjunctionMatcher<T> compose(Matcher<? super T>... matchers)
 	{
 		return compose(null, matchers);
 	}
@@ -81,7 +81,7 @@ public final class ComposeMatchers
 	 * @see ConjunctionMatcher
 	 */
 	@SafeVarargs
-	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Matcher<T>... matchers)
+	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Matcher<? super T>... matchers)
 	{
 		requireNonNull(matchers, "matchers");
 		
@@ -104,7 +104,7 @@ public final class ComposeMatchers
 	 * @return a matcher that can compose itself with further matchers
 	 * @see ConjunctionMatcher
 	 */
-	public static <T> ConjunctionMatcher<T> compose(Iterable<Matcher<T>> matchers)
+	public static <T> ConjunctionMatcher<T> compose(Iterable<Matcher<? super T>> matchers)
 	{
 		return compose(null, matchers);
 	}
@@ -127,7 +127,7 @@ public final class ComposeMatchers
 	 * @return a matcher that can compose itself with further matchers
 	 * @see ConjunctionMatcher
 	 */
-	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Iterable<Matcher<T>> matchers)
+	public static <T> ConjunctionMatcher<T> compose(String compositeDescription, Iterable<Matcher<? super T>> matchers)
 	{
 		requireNonNull(matchers, "matchers");
 		

@@ -48,6 +48,17 @@ public class ConjunctionMatcherTest
 	}
 	
 	@Test
+	public void andWithSuperTypeMatcherReturnsCompositeMatcher()
+	{
+		ConjunctionMatcher<String> matcher = compose("x", anything("y"));
+		
+		ConjunctionMatcher<String> actual = matcher.and(anything("z"));
+		
+		assertThat(asString(actual), is("x y\n"
+			+ "          and z"));
+	}
+	
+	@Test
 	public void andPreservesMatcher()
 	{
 		ConjunctionMatcher<Object> matcher = compose("x", anything("y"));
