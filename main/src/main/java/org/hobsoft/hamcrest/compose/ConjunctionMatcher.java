@@ -56,13 +56,13 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 
 	private final String compositeDescription;
 	
-	private final List<Matcher<T>> matchers;
+	private final List<Matcher<? super T>> matchers;
 	
 	// ----------------------------------------------------------------------------------------------------------------
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	ConjunctionMatcher(String compositeDescription, Iterable<Matcher<T>> matchers)
+	ConjunctionMatcher(String compositeDescription, Iterable<Matcher<? super T>> matchers)
 	{
 		requireNonNull(matchers, "matchers");
 		matchers.forEach(matcher -> requireNonNull(matcher, "matcher"));
@@ -84,7 +84,7 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	 *            the matcher to logically AND to this matcher
 	 * @return the composed matcher
 	 */
-	public ConjunctionMatcher<T> and(Matcher<T> matcher)
+	public ConjunctionMatcher<T> and(Matcher<? super T> matcher)
 	{
 		requireNonNull(matcher, "matcher");
 		
@@ -119,7 +119,7 @@ public final class ConjunctionMatcher<T> extends TypeSafeDiagnosingMatcher<T>
 	{
 		boolean matches = true;
 		
-		for (Matcher<T> matcher : matchers)
+		for (Matcher<? super T> matcher : matchers)
 		{
 			if (!matcher.matches(actual))
 			{

@@ -17,7 +17,9 @@ import org.hamcrest.StringDescription;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hobsoft.hamcrest.compose.TestMatchers.charSeq;
 import static org.hobsoft.hamcrest.compose.TestMatchers.nothing;
+import static org.hobsoft.hamcrest.compose.TestMatchers.relax;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -53,5 +55,37 @@ public class TestMatchersTest
 		nothing("x").describeMismatch("y", description);
 		
 		assertThat(description.toString(), is("x was \"y\""));
+	}
+	
+	@Test
+	public void relaxThenMatchesDelegates()
+	{
+		assertThat(relax(is("x")).matches("x"), is(true));
+	}
+	
+	@Test
+	public void relaxThenDescribeToDelegates()
+	{
+		StringDescription description = new StringDescription();
+		
+		relax(is("x")).describeTo(description);
+		
+		assertThat(description.toString(), is("is \"x\""));
+	}
+	
+	@Test
+	public void charSeqThenMatchesDelegates()
+	{
+		assertThat(charSeq(is("x")).matches("x"), is(true));
+	}
+	
+	@Test
+	public void charSeqThenDescribeToDelegates()
+	{
+		StringDescription description = new StringDescription();
+		
+		charSeq(is("x")).describeTo(description);
+		
+		assertThat(description.toString(), is("is \"x\""));
 	}
 }
