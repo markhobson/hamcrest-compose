@@ -58,4 +58,27 @@ final class TestMatchers
 			}
 		};
 	}
+	
+	public static <T> Matcher<T> relax(Matcher<? extends T> delegate)
+	{
+		return new BaseMatcher<T>()
+		{
+			@Override
+			public boolean matches(Object item)
+			{
+				return delegate.matches(item);
+			}
+			
+			@Override
+			public void describeTo(Description description)
+			{
+				delegate.describeTo(description);
+			}
+		};
+	}
+	
+	public static Matcher<CharSequence> charSeq(Matcher<? extends CharSequence> delegate)
+	{
+		return relax(delegate);
+	}
 }

@@ -48,7 +48,7 @@ public class ConjunctionMatcherTest
 	}
 	
 	@Test
-	public void andWithSuperTypeMatcherReturnsCompositeMatcher()
+	public void andWithSupertypeMatcherReturnsCompositeMatcher()
 	{
 		ConjunctionMatcher<String> matcher = compose("x", anything("y"));
 		

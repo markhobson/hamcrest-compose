@@ -30,6 +30,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeatureValue;
+import static org.hobsoft.hamcrest.compose.TestMatchers.charSeq;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -45,6 +46,15 @@ public class ComposeMatchersTest
 	public void composeWithMatcherReturnsMatcher()
 	{
 		Matcher<String> actual = compose("x", startsWith("y")).and(endsWith("z"));
+		
+		assertThat(actual.matches("yz"), is(true));
+	}
+	
+	@Test
+	public void composeWithSupertypeMatcherReturnsMatcher()
+	{
+		Matcher<String> actual = ComposeMatchers.<String>compose("x", charSeq(startsWith("y")))
+			.and(charSeq(endsWith("z")));
 		
 		assertThat(actual.matches("yz"), is(true));
 	}
@@ -67,6 +77,14 @@ public class ComposeMatchersTest
 	public void composeWithMatcherArrayReturnsMatcher()
 	{
 		Matcher<String> actual = compose("x", startsWith("y"), endsWith("z"));
+		
+		assertThat(actual.matches("yz"), is(true));
+	}
+	
+	@Test
+	public void composeWithSupertypeMatcherArrayReturnsMatcher()
+	{
+		Matcher<String> actual = compose("x", charSeq(startsWith("y")), charSeq(endsWith("z")));
 		
 		assertThat(actual.matches("yz"), is(true));
 	}
@@ -108,6 +126,14 @@ public class ComposeMatchersTest
 	}
 	
 	@Test
+	public void composeWithSupertypeMatcherListReturnsMatcher()
+	{
+		Matcher<String> actual = compose("x", asList(charSeq(startsWith("y")), charSeq(endsWith("z"))));
+		
+		assertThat(actual.matches("yz"), is(true));
+	}
+	
+	@Test
 	public void composeWithMatcherListWithoutDescriptionReturnsMatcher()
 	{
 		Matcher<String> actual = compose(asList(startsWith("y"), endsWith("z")));
@@ -143,17 +169,6 @@ public class ComposeMatchersTest
 		
 		Matcher<String> actual = compose("x", matchers);
 		matchers.add(endsWith("z"));
-		
-		assertThat(actual.matches("y"), is(true));
-	}
-	
-	@Test
-	public void composeWithSupertypeMatcherListReturnsMatcher()
-	{
-		List<Matcher<? super String>> matchers = new ArrayList<>();
-		matchers.add(anything());
-		
-		Matcher<String> actual = compose("x", matchers);
 		
 		assertThat(actual.matches("y"), is(true));
 	}
