@@ -13,6 +13,10 @@
  */
 package org.hobsoft.hamcrest.compose;
 
+import java.io.Serializable;
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.function.Function;
 
 import org.hamcrest.Matcher;
@@ -139,7 +143,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("ham", hasFeature(String::length, equalTo(3)));
+	 * assertThat("ham", hasFeature(s -> s.length(), equalTo(3)));
 	 * </pre>
 	 * 
 	 * @param featureFunction
@@ -156,6 +160,32 @@ public final class ComposeMatchers
 	public static <T, U> Matcher<T> hasFeature(Function<T, U> featureFunction, Matcher<? super U> featureMatcher)
 	{
 		return hasFeature(featureFunction.toString(), featureFunction, featureMatcher);
+	}
+
+	/**
+	 * Returns a matcher that matches the specified feature of an object.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("ham", hasFeature(String::length, equalTo(3)));
+	 * </pre>
+	 *
+	 * @param featureFunction
+	 *            a method reference to extract the feature from the object. The compiler will generate a serialized
+	 *            form of the lambda, and that is used to extract the feature name for {@code describeTo} and
+	 *            {@code describeMismatch}.
+	 * @param featureMatcher
+	 *            the matcher to apply to the specified feature
+	 * @param <T>
+	 *            the type of the object to be matched
+	 * @param <U>
+	 *            the type of the feature to be matched
+	 * @return the feature matcher
+	 */
+	public static <T, U> Matcher<T> hasFeature(SerializableFunction<T, U> featureFunction,
+		Matcher<? super U> featureMatcher)
+	{
+		return hasFeature(getFeatureName(featureFunction), featureFunction, featureMatcher);
 	}
 
 	/**
@@ -217,7 +247,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("ham", hasFeatureValue(String::length, 3));
+	 * assertThat("ham", hasFeatureValue(s -> s.length(), 3));
 	 * </pre>
 	 * <p>
 	 * This is equivalent to {@code hasFeature(featureFunction, equalTo(featureValue))}.
@@ -238,6 +268,33 @@ public final class ComposeMatchers
 		return hasFeature(featureFunction, equalTo(featureValue));
 	}
 	
+	/**
+	 * Returns a matcher that matches the specified feature value of an object.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("ham", hasFeatureValue(String::length, 3));
+	 * </pre>
+	 * <p>
+	 * This is equivalent to {@code hasFeature(featureFunction, equalTo(featureValue))}.
+	 *
+	 * @param featureFunction
+	 *            a method reference to extract the feature from the object. The compiler will generate a serialized
+	 *            form of the lambda, and that is used to extract the feature name for {@code describeTo} and
+	 *            {@code describeMismatch}.
+	 * @param featureValue
+	 *            the feature value to match
+	 * @param <T>
+	 *            the type of the object to be matched
+	 * @param <U>
+	 *            the type of the feature to be matched
+	 * @return the feature matcher
+	 */
+	public static <T, U> Matcher<T> hasFeatureValue(SerializableFunction<T, U> featureFunction, U featureValue)
+	{
+		return hasFeature(featureFunction, equalTo(featureValue));
+	}
+
 	/**
 	 * Returns a matcher that matches the specified feature value of an object.
 	 * <p>
@@ -294,5 +351,34 @@ public final class ComposeMatchers
 		Function<T, U> featureFunction, U featureValue)
 	{
 		return hasFeature(featureDescription, featureName, featureFunction, equalTo(featureValue));
+	}
+
+	private static String getFeatureName(SerializableFunction<?, ?> featureFunction) {
+		for (Class<?> clazz = featureFunction.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
+			try {
+				Method writeReplace = clazz.getDeclaredMethod("writeReplace");
+				writeReplace.setAccessible(true);
+				Object replacement = writeReplace.invoke(featureFunction);
+				if (!(replacement instanceof SerializedLambda))
+					break;
+				SerializedLambda lambda = (SerializedLambda) replacement;
+				return lambda.getImplMethodName();
+			}
+			catch (NoSuchMethodException ignored) {}
+			catch (IllegalAccessException | InvocationTargetException e) {
+				break;
+			}
+		}
+		return featureFunction.toString();
+	}
+
+	/**
+	 * Represents a serialized function that accepts one argument and produces a result.  The Java compiler will
+	 * generate the serialized form from a method reference.
+	 *
+	 * @param <T> the type of the input to the function
+	 * @param <U> the type of the result of the function
+	 */
+	public interface SerializableFunction<T, U> extends Function<T, U>, Serializable {
 	}
 }

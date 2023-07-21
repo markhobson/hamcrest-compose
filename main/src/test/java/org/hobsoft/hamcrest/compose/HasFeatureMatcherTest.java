@@ -69,6 +69,17 @@ public class HasFeatureMatcherTest
 	}
 	
 	@Test
+	public void describeToWhenNoNameUsesMethodReference()
+	{
+		Matcher<String> matcher = hasFeature(String::length, anything("y"));
+		StringDescription description = new StringDescription();
+
+		matcher.describeTo(description);
+
+		assertThat(description.toString(), is("length y"));
+	}
+
+	@Test
 	public void matchesWhenFeatureMatcherMatchesReturnsTrue()
 	{
 		Matcher<String> matcher = hasFeature("x", "y", String::length, equalTo(1));
@@ -104,6 +115,17 @@ public class HasFeatureMatcherTest
 		matcher.describeMismatch("a", description);
 		
 		assertThat(description.toString(), is("x y was <1>"));
+	}
+
+	@Test
+	public void describeMismatchWhenNoNameUsesMethodReference()
+	{
+		Matcher<String> matcher = hasFeature(String::length, nothing("y"));
+		StringDescription description = new StringDescription();
+
+		matcher.describeMismatch("a", description);
+
+		assertThat(description.toString(), is("length y was <1>"));
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
