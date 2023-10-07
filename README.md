@@ -60,16 +60,22 @@ This factory method builds a matcher that matches a 'feature' of an object. A fe
 assertThat(person, hasFeature(Person::getFirstName, equalTo("ham")));
 ```
 
-By default this matcher will describe itself and any mismatches by using the `toString` method of the feature function. When using lambdas this is not particularly informative so a feature description can be specified: 
+By default this matcher will describe itself and any mismatches by using the `toString` method of the feature function. If the function is a method reference then the method name will be used for the description instead. To override this a feature description can be specified:
 
 ```java
 assertThat(person, hasFeature("a person with first name", Person::getFirstName, equalTo("ham")));
+```
+
+When using lambdas the `toString` is not particularly informative so a feature description can also be specified:
+
+```java
+assertThat(person, hasFeature("a person with first name", p -> p.getFirstName(), equalTo("ham")));
 ```
 	
 This feature description is also used to describe any mismatches. To specify a feature name for the mismatch only:
 
 ```java
-assertThat(person, hasFeature("a person with first name", "first name", Person::getFirstName, equalTo("ham")));
+assertThat(person, hasFeature("a person with first name", "first name", p -> p.getFirstName(), equalTo("ham")));
 ```
 
 ### ComposeMatchers.hasFeatureValue
