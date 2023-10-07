@@ -13,10 +13,6 @@
  */
 package org.hobsoft.hamcrest.compose;
 
-import java.io.Serializable;
-import java.lang.invoke.SerializedLambda;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.function.Function;
 
 import org.hamcrest.Matcher;
@@ -185,7 +181,7 @@ public final class ComposeMatchers
 	public static <T, U> Matcher<T> hasFeature(SerializableFunction<T, U> featureFunction,
 		Matcher<? super U> featureMatcher)
 	{
-		return hasFeature(getFeatureName(featureFunction), featureFunction, featureMatcher);
+		return hasFeature(featureFunction.getName(), featureFunction, featureMatcher);
 	}
 
 	/**
@@ -351,43 +347,5 @@ public final class ComposeMatchers
 		Function<T, U> featureFunction, U featureValue)
 	{
 		return hasFeature(featureDescription, featureName, featureFunction, equalTo(featureValue));
-	}
-
-	private static String getFeatureName(SerializableFunction<?, ?> featureFunction)
-	{
-		for (Class<?> clazz = featureFunction.getClass(); clazz != null; clazz = clazz.getSuperclass())
-		{
-			try
-			{
-				Method writeReplace = clazz.getDeclaredMethod("writeReplace");
-				writeReplace.setAccessible(true);
-				Object replacement = writeReplace.invoke(featureFunction);
-				if (!(replacement instanceof SerializedLambda))
-				{
-					break;
-				}
-				SerializedLambda lambda = (SerializedLambda) replacement;
-				return lambda.getImplMethodName();
-			}
-			catch (NoSuchMethodException ignored)
-			{
-			}
-			catch (IllegalAccessException | InvocationTargetException e)
-			{
-				break;
-			}
-		}
-		return featureFunction.toString();
-	}
-
-	/**
-	 * Represents a serialized function that accepts one argument and produces a result.  The Java compiler will
-	 * generate the serialized form from a method reference.
-	 *
-	 * @param <T> the type of the input to the function
-	 * @param <U> the type of the result of the function
-	 */
-	public interface SerializableFunction<T, U> extends Function<T, U>, Serializable
-	{
 	}
 }
