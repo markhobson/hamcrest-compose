@@ -40,22 +40,28 @@ public interface SerializableFunction<T, U> extends Function<T, U>, Serializable
 			{
 				Method writeReplace = clazz.getDeclaredMethod("writeReplace");
 				writeReplace.setAccessible(true);
+				
 				Object replacement = writeReplace.invoke(this);
 				if (!(replacement instanceof SerializedLambda))
 				{
+					// not a method reference
 					break;
 				}
+				
 				SerializedLambda lambda = (SerializedLambda) replacement;
 				return lambda.getImplMethodName();
 			}
-			catch (NoSuchMethodException ignored)
+			catch (NoSuchMethodException exception)
 			{
+				// continue to superclass
 			}
-			catch (IllegalAccessException | InvocationTargetException e)
+			catch (IllegalAccessException | InvocationTargetException exception)
 			{
+				// cannot get replacement
 				break;
 			}
 		}
+		
 		return toString();
 	}
 }
