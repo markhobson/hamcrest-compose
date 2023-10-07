@@ -24,9 +24,9 @@ import java.util.function.Function;
  * the serialized form from a method reference.
  *
  * @param <T> the type of the input to the function
- * @param <U> the type of the result of the function
+ * @param <R> the type of the result of the function
  */
-public interface SerializableFunction<T, U> extends Function<T, U>, Serializable
+public interface SerializableFunction<T, R> extends Function<T, R>, Serializable
 {
 	// ----------------------------------------------------------------------------------------------------------------
 	// public methods
@@ -34,11 +34,11 @@ public interface SerializableFunction<T, U> extends Function<T, U>, Serializable
 	
 	default String getName()
 	{
-		for (Class<?> clazz = getClass(); clazz != null; clazz = clazz.getSuperclass())
+		for (Class<?> klass = getClass(); klass != null; klass = klass.getSuperclass())
 		{
 			try
 			{
-				Method writeReplace = clazz.getDeclaredMethod("writeReplace");
+				Method writeReplace = klass.getDeclaredMethod("writeReplace");
 				writeReplace.setAccessible(true);
 				
 				Object replacement = writeReplace.invoke(this);
