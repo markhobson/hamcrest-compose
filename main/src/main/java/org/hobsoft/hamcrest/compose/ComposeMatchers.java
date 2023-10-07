@@ -139,7 +139,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("ham", hasFeature(String::length, equalTo(3)));
+	 * assertThat("ham", hasFeature(s -> s.length(), equalTo(3)));
 	 * </pre>
 	 * 
 	 * @param featureFunction
@@ -156,6 +156,31 @@ public final class ComposeMatchers
 	public static <T, U> Matcher<T> hasFeature(Function<T, U> featureFunction, Matcher<? super U> featureMatcher)
 	{
 		return hasFeature(featureFunction.toString(), featureFunction, featureMatcher);
+	}
+
+	/**
+	 * Returns a matcher that matches the specified feature of an object.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("ham", hasFeature(String::length, equalTo(3)));
+	 * </pre>
+	 *
+	 * @param featureFunction
+	 *            a method reference to extract the feature from the object. The compiler will generate a serialized
+	 *            lambda that is used to obtain the feature name for {@code describeTo} and {@code describeMismatch}.
+	 * @param featureMatcher
+	 *            the matcher to apply to the specified feature
+	 * @param <T>
+	 *            the type of the object to be matched
+	 * @param <U>
+	 *            the type of the feature to be matched
+	 * @return the feature matcher
+	 */
+	public static <T, U> Matcher<T> hasFeature(SerializableFunction<T, U> featureFunction,
+		Matcher<? super U> featureMatcher)
+	{
+		return hasFeature(featureFunction.getName(), featureFunction, featureMatcher);
 	}
 
 	/**
@@ -217,7 +242,7 @@ public final class ComposeMatchers
 	 * <p>
 	 * For example:
 	 * <pre>
-	 * assertThat("ham", hasFeatureValue(String::length, 3));
+	 * assertThat("ham", hasFeatureValue(s -> s.length(), 3));
 	 * </pre>
 	 * <p>
 	 * This is equivalent to {@code hasFeature(featureFunction, equalTo(featureValue))}.
@@ -238,6 +263,32 @@ public final class ComposeMatchers
 		return hasFeature(featureFunction, equalTo(featureValue));
 	}
 	
+	/**
+	 * Returns a matcher that matches the specified feature value of an object.
+	 * <p>
+	 * For example:
+	 * <pre>
+	 * assertThat("ham", hasFeatureValue(String::length, 3));
+	 * </pre>
+	 * <p>
+	 * This is equivalent to {@code hasFeature(featureFunction, equalTo(featureValue))}.
+	 *
+	 * @param featureFunction
+	 *            a method reference to extract the feature from the object. The compiler will generate a serialized
+	 *            lambda that is used to obtain the feature name for {@code describeTo} and {@code describeMismatch}.
+	 * @param featureValue
+	 *            the feature value to match
+	 * @param <T>
+	 *            the type of the object to be matched
+	 * @param <U>
+	 *            the type of the feature to be matched
+	 * @return the feature matcher
+	 */
+	public static <T, U> Matcher<T> hasFeatureValue(SerializableFunction<T, U> featureFunction, U featureValue)
+	{
+		return hasFeature(featureFunction, equalTo(featureValue));
+	}
+
 	/**
 	 * Returns a matcher that matches the specified feature value of an object.
 	 * <p>
