@@ -168,8 +168,7 @@ public final class ComposeMatchers
 	 *
 	 * @param featureFunction
 	 *            a method reference to extract the feature from the object. The compiler will generate a serialized
-	 *            form of the lambda, and that is used to extract the feature name for {@code describeTo} and
-	 *            {@code describeMismatch}.
+	 *            lambda that is used to obtain the feature name for {@code describeTo} and {@code describeMismatch}.
 	 * @param featureMatcher
 	 *            the matcher to apply to the specified feature
 	 * @param <T>
@@ -276,8 +275,7 @@ public final class ComposeMatchers
 	 *
 	 * @param featureFunction
 	 *            a method reference to extract the feature from the object. The compiler will generate a serialized
-	 *            form of the lambda, and that is used to extract the feature name for {@code describeTo} and
-	 *            {@code describeMismatch}.
+	 *            lambda that is used to obtain the feature name for {@code describeTo} and {@code describeMismatch}.
 	 * @param featureValue
 	 *            the feature value to match
 	 * @param <T>
