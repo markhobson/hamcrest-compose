@@ -353,19 +353,27 @@ public final class ComposeMatchers
 		return hasFeature(featureDescription, featureName, featureFunction, equalTo(featureValue));
 	}
 
-	private static String getFeatureName(SerializableFunction<?, ?> featureFunction) {
-		for (Class<?> clazz = featureFunction.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
-			try {
+	private static String getFeatureName(SerializableFunction<?, ?> featureFunction)
+	{
+		for (Class<?> clazz = featureFunction.getClass(); clazz != null; clazz = clazz.getSuperclass())
+		{
+			try
+			{
 				Method writeReplace = clazz.getDeclaredMethod("writeReplace");
 				writeReplace.setAccessible(true);
 				Object replacement = writeReplace.invoke(featureFunction);
 				if (!(replacement instanceof SerializedLambda))
+				{
 					break;
+				}
 				SerializedLambda lambda = (SerializedLambda) replacement;
 				return lambda.getImplMethodName();
 			}
-			catch (NoSuchMethodException ignored) {}
-			catch (IllegalAccessException | InvocationTargetException e) {
+			catch (NoSuchMethodException ignored)
+			{
+			}
+			catch (IllegalAccessException | InvocationTargetException e)
+			{
 				break;
 			}
 		}
@@ -379,6 +387,7 @@ public final class ComposeMatchers
 	 * @param <T> the type of the input to the function
 	 * @param <U> the type of the result of the function
 	 */
-	public interface SerializableFunction<T, U> extends Function<T, U>, Serializable {
+	public interface SerializableFunction<T, U> extends Function<T, U>, Serializable
+	{
 	}
 }
