@@ -114,4 +114,4 @@ The downside to this approach is that Mockito does not use the matcher to descri
 
 * [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-[![Build Status](https://travis-ci.org/markhobson/hamcrest-compose.svg?branch=master)](https://travis-ci.org/markhobson/hamcrest-compose)
+[![CI](https://github.com/markhobson/hamcrest-compose/actions/workflows/ci.yml/badge.svg)](https://github.com/markhobson/hamcrest-compose/actions/workflows/ci.yml)
