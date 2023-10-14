@@ -20,7 +20,7 @@ Hamcrest Compose is available in the [Maven Central repository](http://search.ma
 <dependency>
 	<groupId>org.hobsoft.hamcrest</groupId>
 	<artifactId>hamcrest-compose</artifactId>
-	<version>0.4.0</version>
+	<version>0.5.0</version>
 	<scope>test</scope>
 </dependency>
 ```
