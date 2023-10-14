@@ -53,8 +53,8 @@
 	</issueManagement>
 	
 	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/markhobson/hamcrest-compose</url>
+		<system>GitHub</system>
+		<url>https://github.com/markhobson/hamcrest-compose/actions/workflows/ci.yml</url>
 	</ciManagement>
 	
 	<developers>
