@@ -108,7 +108,7 @@ The downside to this approach is that Mockito does not use the matcher to descri
 
 ## Links
 
-* [Javadoc](http://www.hobsoft.org/hamcrest-compose/hamcrest-compose/apidocs/)
+* [Javadoc](https://www.markh.me/hamcrest-compose/hamcrest-compose/apidocs/)
 
 ## License
 
