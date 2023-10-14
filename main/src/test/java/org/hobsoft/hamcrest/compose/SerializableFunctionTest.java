@@ -33,7 +33,7 @@ public class SerializableFunctionTest
 	{
 		private final String name;
 		
-		public StringToLengthFunction(String name)
+		StringToLengthFunction(String name)
 		{
 			this.name = name;
 		}

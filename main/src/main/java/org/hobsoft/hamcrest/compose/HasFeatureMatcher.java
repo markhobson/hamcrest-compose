@@ -43,7 +43,7 @@ class HasFeatureMatcher<T, U> extends FeatureMatcher<T, U>
 	// constructors
 	// ----------------------------------------------------------------------------------------------------------------
 
-	public HasFeatureMatcher(String featureDescription, String featureName, Function<T, U> featureFunction,
+	HasFeatureMatcher(String featureDescription, String featureName, Function<T, U> featureFunction,
 		Matcher<? super U> featureMatcher)
 	{
 		super(featureMatcher, featureDescription, featureName);
