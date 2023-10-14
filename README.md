@@ -106,6 +106,20 @@ verify(mock).doSomething(argThat(hasFeature(Person::getName, equalTo("John"))));
 
 The downside to this approach is that Mockito does not use the matcher to describe any mismatches. Instead it simply writes the actual argument using `toString` which makes diagnosing the mismatch harder.
 
+## Releasing
+
+Prerequisites:
+
+1. [Configure GPG key pair](https://central.sonatype.org/publish/requirements/gpg/)
+1. [Configure Maven master password](https://maven.apache.org/guides/mini/guide-encryption.html#How_to_create_a_master_password)
+1. [Configure Maven settings](https://central.sonatype.org/publish/publish-maven/#distribution-management-and-authentication) for server `sonatype-nexus-staging` with your [encrypted](https://maven.apache.org/guides/mini/guide-encryption.html#how-to-encrypt-server-passwords) OSSRH credentials
+
+To release a new version:
+
+1. `mvn release:clean release:prepare`
+1. `mvn release:perform`
+1. Enter GPG passphrase when prompted
+
 ## Links
 
 * [Javadoc](https://www.markh.me/hamcrest-compose/hamcrest-compose/apidocs/)
