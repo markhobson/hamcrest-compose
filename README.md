@@ -117,7 +117,7 @@ Prerequisites:
 To release a new version:
 
 1. `mvn release:clean release:prepare`
-1. `mvn release:perform`
+1. `mvn release:perform -DuseReleaseProfile`
 1. Enter GPG passphrase when prompted
 
 ## Links
